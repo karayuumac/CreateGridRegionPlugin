@@ -1,0 +1,83 @@
+buildscript {
+    ext.kotlin_version = '1.1.51'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+
+group = 'com.github.karayuu.grid'
+version = '0.1.0'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile)*.options*.encoding = tasks.withType(GroovyCompile)*.groovyOptions*.encoding = 'UTF-8'
+
+String libFolder = System.getenv("GIGANTIC_LIB")
+String outputFolder = System.getenv("SEICHI_OUT")
+if (libFolder == null || libFolder.isEmpty()) {
+    for (int i = 0; i < 10; i++) {
+        println("ERROR: Env variable \"GIGANTIC_LIB\" isn't defined. The build will be failed.")
+    }
+}
+if (outputFolder == null || outputFolder.isEmpty()) {
+    for (int i = 0; i < 10; i++) {
+        println("WARN: Env variable \"SEICHI_OUT\" isn't defined. The jar file is produced at \"grid/build/libs\".")
+    }
+}
+
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
+    }
+    maven {
+        name = "worldedit-repo"
+        url = "http://maven.sk89q.com/repo/"
+    }
+}
+
+
+dependencies {
+    compile group: "org.jetbrains.kotlin", "name": "kotlin-stdlib-jre8", version: kotlin_version
+    embed "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'org.slf4j:slf4j-log4j12:1.7.21'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: "me.clip", name: "placeholderapi", version: "2.8.2"
+    compile group: "com.sk89q.worldedit", name: "worldedit-bukkit", version: "6.1.3-SNAPSHOT"
+    compile group: "com.sk89q.worldguard", name: "worldguard-legacy", version: "6.1.2"
+    compile fileTree(dir: System.getenv("GIGANTIC_LIB"), includes: ['*.jar'])
+}
+
+jar {
+    from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+task copyJar(type: Copy){
+    from jar
+    into outputFolder
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+    filteringCharset = 'UTF-8'
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
