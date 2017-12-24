@@ -1,0 +1,2 @@
+# CreateGridRegionPlugin
+整地鯖で実装されているグリッド式保護をSeichiAssistなしで動くようにしたプラグインです。
