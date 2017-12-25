@@ -1,6 +1,8 @@
 package com.github.karayuu
 
 import com.github.karayuu.command.CommandRegistration
+import com.github.karayuu.listener.ListenerRegistration
+import com.github.karayuu.player.PlayerRepository
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -22,6 +24,8 @@ class CreateGridRegionPlugin : JavaPlugin() {
     override fun onEnable() {
         plugin = this
         CommandRegistration.register()
+        ListenerRegistration.regist()
+        PlayerRepository.onEnable()
         Bukkit.getServer().logger.info("[CreateGridRegionPlugin] 起動完了")
     }
 
