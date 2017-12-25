@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.1.51'
+    ext.kotlin_version = '1.1.60'
 
     repositories {
         mavenCentral()
@@ -12,7 +12,7 @@ buildscript {
 
 apply plugin: 'kotlin'
 
-group = 'com.github.karayuu.grid'
+group = 'com.github.karayuu'
 version = '0.1.0'
 
 sourceCompatibility = 1.8
@@ -21,7 +21,7 @@ targetCompatibility = 1.8
 tasks.withType(JavaCompile)*.options*.encoding = tasks.withType(GroovyCompile)*.groovyOptions*.encoding = 'UTF-8'
 
 String libFolder = System.getenv("GIGANTIC_LIB")
-String outputFolder = System.getenv("SEICHI_OUT")
+String outputFolder = "C:\\Users\\karayuu\\Documents\\server-SeichiAssist(s2)\\plugins"
 if (libFolder == null || libFolder.isEmpty()) {
     for (int i = 0; i < 10; i++) {
         println("ERROR: Env variable \"GIGANTIC_LIB\" isn't defined. The build will be failed.")
@@ -58,10 +58,11 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
-    compile group: "me.clip", name: "placeholderapi", version: "2.8.2"
     compile group: "com.sk89q.worldedit", name: "worldedit-bukkit", version: "6.1.3-SNAPSHOT"
     compile group: "com.sk89q.worldguard", name: "worldguard-legacy", version: "6.1.2"
     compile fileTree(dir: System.getenv("GIGANTIC_LIB"), includes: ['*.jar'])
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
 
 jar {

@@ -1,0 +1,12 @@
+name: CreateGridRegionPlugin
+main: com.github.karayuu.CreateGridRegionPlugin
+version: @version@
+description: Create worldguard region by using grid system.
+
+commands:
+  grid:
+    description: "グリッド式保護メニューを開きます。"
+    usage: /<command>
+    default: op
+    permission: gridregion.grid
+    permission-message: You don't have permission <permission>

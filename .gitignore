@@ -22,3 +22,16 @@
 hs_err_pid*
 .idea/
 CreateGridRegionPlugin.iml
+.gradle/
+build/classes/main/META-INF/
+build/kotlin-build/
+build/kotlin-classes/main/META-INF/
+build/kotlin/
+build/resources/
+build/tmp/
+gradlew
+gradlew.bat
+gradle/wrapper/gradle-wrapper.properties
+out/production/classes/META-INF/
+out/production/resources/
+settings.gradle
