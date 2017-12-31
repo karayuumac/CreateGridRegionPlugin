@@ -48,6 +48,14 @@ abstract class Menu : InventoryHolder {
     abstract fun getTitle(playerData: PlayerData) : String
 
     /**
+     * Menuを開いた際の初期化処理を取得します。
+     * reope時には実行されません。最初に開いた1回目だけで実行したい動作を実装してください。
+     * reopen時にも実行したい初期化動作はinit{}を使用してください。
+     * @param playerData Menuを開いているplayerのplayerData
+     */
+    abstract fun init(playerData: PlayerData)
+
+    /**
      * Menuにbuttonを登録します。
      * @param slot 登録するbuttonのMenu内でのスロット番号
      * @param button 登録するbutton
@@ -70,6 +78,7 @@ abstract class Menu : InventoryHolder {
      * @param playSound Menuを開く際音を鳴らすか否か
      */
     fun openMenu(playerData: PlayerData, playSound: Boolean = true) {
+        init(playerData)
         playerData.player.openInventory(getInventory(playerData))
         if (playSound) playerData.player.playSound(openSound)
     }
@@ -94,10 +103,12 @@ abstract class Menu : InventoryHolder {
     }
 
     /**
-     * Menuを開きなおします。
+     * Menuを開きなおします。init処理は実行されません。
      * @param playerData Menuを開くplayerのplayerData
      */
-    fun reopen(playerData: PlayerData) = openMenu(playerData, playSound = false)
+    fun reopen(playerData: PlayerData) {
+        playerData.player.openInventory(getInventory(playerData))
+    }
 
     override fun getInventory(): Inventory? = null
 

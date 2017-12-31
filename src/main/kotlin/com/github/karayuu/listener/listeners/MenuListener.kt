@@ -1,10 +1,13 @@
 package com.github.karayuu.listener.listeners
 
+import com.github.karayuu.menu.Menu
 import com.github.karayuu.menu.MenuReopsitory
 import com.github.karayuu.util.toPlayerData
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
+import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
 /**
@@ -13,6 +16,17 @@ import org.bukkit.event.player.PlayerInteractEvent
  * Support at dev-basic or dev-extreme channel of Discord
  */
 class MenuListener : Listener {
+    @EventHandler
+    fun onNormal(event: InventoryClickEvent) {
+        val playerData = (event.whoClicked as Player).toPlayerData() ?: return
+        val menu = event.inventory.holder as? Menu ?: return
+
+        if (event.clickedInventory != null) {
+            event.isCancelled = true
+            menu.getButton(playerData, event.slot)?.onClick(playerData, event)
+        }
+    }
+
     @EventHandler
     fun onNormal(event: PlayerInteractEvent) {
         //アイテムがない場合終了
@@ -28,6 +42,7 @@ class MenuListener : Listener {
             MenuReopsitory.getMenuToOpen(playerData, event, trigger)?.let { menu ->
                 event.isCancelled = true
                 menu.openMenu(playerData)
+                menu.init(playerData)
             }
         }
     }

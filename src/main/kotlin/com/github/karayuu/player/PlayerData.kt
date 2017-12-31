@@ -1,5 +1,7 @@
 package com.github.karayuu.player
 
+import com.github.karayuu.menu.menus.GridMenu
+import com.github.karayuu.player.property.GridRegion
 import com.github.karayuu.util.toPlayer
 import org.bukkit.entity.Player
 import java.util.*
@@ -17,4 +19,7 @@ data class PlayerData(val uuid: UUID) {
     /** プレイヤー名 */
     val name: String
         get() = player.name
+
+    /** グリッド式保護 */
+    val gridRegion = GridRegion(uuid)
 }

@@ -1,5 +1,6 @@
 package com.github.karayuu.menu
 
+import com.github.karayuu.menu.menus.GridMenu
 import com.github.karayuu.player.PlayerData
 import org.bukkit.event.player.PlayerInteractEvent
 
@@ -15,12 +16,15 @@ import org.bukkit.event.player.PlayerInteractEvent
 object MenuReopsitory {
     /** 作成したメニューのenum */
     enum class MenuType(val menu: Menu) {
-
+        GRID(GridMenu)
     }
 
+    /**
+     * トリガーenumクラス
+     */
     enum class Trigger {
         RIGHT_CLICK,
-        LEFT_CLICK
+        LEFT_CLICK,
     }
 
     fun getMenuToOpen(playerData: PlayerData, event: PlayerInteractEvent, trigger: Trigger) : Menu? =

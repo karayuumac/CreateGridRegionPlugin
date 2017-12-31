@@ -1,5 +1,7 @@
 package com.github.karayuu.command.commands
 
+import com.github.karayuu.menu.menus.GridMenu
+import com.github.karayuu.util.toPlayerData
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
@@ -12,7 +14,7 @@ import org.bukkit.entity.Player
  */
 class GridCommand : TabExecutor {
     override fun onCommand(sender: CommandSender?, command: Command?, label: String?, args: Array<out String>?): Boolean {
-        if (args == null) {
+        if (args == null || sender == null) {
             return false
         }
 
@@ -20,7 +22,8 @@ class GridCommand : TabExecutor {
             return false
         }
 
-        sender.sendMessage("これで実行されてますよう！")
+        GridMenu.openMenu(sender.toPlayerData() ?: return false)
+        GridMenu.init(sender.toPlayerData() ?: return false)
         return true
     }
 

@@ -11,3 +11,5 @@ import com.github.karayuu.CreateGridRegionPlugin
  * 警告をコンソールに表示させます。
  */
 fun sendWarning(msg: String) = CreateGridRegionPlugin.plugin.logger.warning(msg)
+
+fun sendInfo(msg: String) = CreateGridRegionPlugin.plugin.logger.info(msg)
