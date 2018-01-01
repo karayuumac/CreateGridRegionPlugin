@@ -27,7 +27,7 @@ class CreateGridRegionPlugin : JavaPlugin() {
     override fun onEnable() {
         plugin = this
         CommandRegistration.register()
-        //YmlRegistration.regist()
+        //YmlRegistration.register()
         configFile = Config(this)
         configFile.loadConfig()
         ListenerRegistration.regist()

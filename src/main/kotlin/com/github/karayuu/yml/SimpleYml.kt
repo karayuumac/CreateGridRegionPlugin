@@ -24,7 +24,7 @@ abstract class SimpleYml(name: String = "") {
     /** 設定ファイル */
     open lateinit var fc: FileConfiguration
 
-    fun regist() {
+    fun register() {
         makeFile()
         load()
         onAvailable()

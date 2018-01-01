@@ -23,7 +23,7 @@ object YmlRegistration {
     /**
      * Ymlの初期化処理。onEnableで呼び出されることを想定
      */
-    fun regist() {
+    fun register() {
         Yml.values().map { ymlEnum -> ymlEnum.simpleYml }.forEach { simpleYml ->
             simpleYml.regist()
         }
