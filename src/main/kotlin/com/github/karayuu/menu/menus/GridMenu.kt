@@ -266,7 +266,7 @@ object GridMenu : Menu() {
             }
             Direction.EAST -> {
                 startLoc.x = startX - 15 * behindUnitAmount
-                startLoc.z = startZ + 15 * leftUnitAmount
+                startLoc.z = startZ - 15 * leftUnitAmount
                 endLoc.x = endX + 15 * aheadUnitAmount
                 endLoc.z = endZ + 15 * rightUnitAmount
             }
@@ -347,13 +347,13 @@ object GridMenu : Menu() {
         if (playerX % 15 == 0) {
             result["x"] = playerX.toDouble()
         } else {
-            result["x"] = Math.floor(((playerX / 15) * 15).toDouble())
+            result["x"] = Math.ceil(((playerX / 15) * 15).toDouble())
         }
 
         if (playerZ % 15 == 0) {
             result["z"] = playerZ.toDouble()
         } else {
-            result["z"] = Math.floor(((playerZ / 15) * 15).toDouble())
+            result["z"] = Math.ceil(((playerZ / 15) * 15).toDouble())
         }
 
         return result.toMap()
