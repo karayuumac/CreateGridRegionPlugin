@@ -1,6 +1,7 @@
 package com.github.karayuu.menu
 
 import com.github.karayuu.player.PlayerData
+import com.github.karayuu.util.SoundConfiguration
 import com.github.karayuu.util.playSound
 import org.bukkit.Bukkit
 import org.bukkit.Sound
@@ -30,9 +31,9 @@ abstract class Menu : InventoryHolder {
         type.defaultSize
     }
     /** プレイヤーがメニューを開いた際の音 */
-    open val openSound = Triple(Sound.BLOCK_FENCE_GATE_OPEN, 1F, 0.1F)
+    open val openSound = SoundConfiguration(Sound.BLOCK_FENCE_GATE_OPEN, 1F, 0.1F)
     /** プレイヤーがメニューを閉じた際の音 */
-    open val closeSound = Triple(Sound.BLOCK_FENCE_GATE_OPEN, 1F, 0.1F)
+    open val closeSound = SoundConfiguration(Sound.BLOCK_FENCE_GATE_OPEN, 1F, 0.1F)
 
     /**
      * メニューのボタンのMapを取得します。

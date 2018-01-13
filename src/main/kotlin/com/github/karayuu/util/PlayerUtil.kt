@@ -25,11 +25,8 @@ fun getPlayer(uuid: UUID) : Player? = CreateGridRegionPlugin.plugin.server.getPl
  */
 fun UUID.toPlayer() : Player? = getPlayer(this)
 
-/**
- * プレイヤーにサウンドを鳴らす拡張関数
- * @param sound Sound,Float,FloatのTripleクラス
- */
-fun Player.playSound(sound: Triple<Sound, Float, Float>) = playSound(this.location, sound.first, sound.second, sound.third)
+fun Player.playSound(soundConfig: SoundConfiguration) =
+        playSound(this.location, soundConfig.sound, soundConfig.volume, soundConfig.pitch)
 
 /**
  * プレイヤーにメッセージを送信します
