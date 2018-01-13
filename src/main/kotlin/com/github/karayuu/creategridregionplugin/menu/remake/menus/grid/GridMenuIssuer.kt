@@ -64,9 +64,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuer() {
         wgSelect(Location(issueTargetPlayer.world, start["x"] ?: 0.0, 0.0, start["z"] ?: 0.0),
                 Location(issueTargetPlayer.world, end["x"] ?: 0.0, 256.0, end["z"] ?: 0.0), issueTargetPlayer)
         canCreateRegion(playerData)
-    }
 
-    init {
         //NumberFormat
         val nfNum = NumberFormat.getNumberInstance()
 
