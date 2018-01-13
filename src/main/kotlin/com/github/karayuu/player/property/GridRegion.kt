@@ -34,7 +34,7 @@ class GridRegion(val uuid: UUID) {
      * すべての方向のunit数を格納したMapを返します。
      * @return すべての方向のunit数を格納したMap
      */
-    public fun getUnitMap() : Map<DirectionType, Int> {
+    fun getUnitMap() : Map<DirectionType, Int> {
         val unitMap: MutableMap<DirectionType, Int> = mutableMapOf()
 
         unitMap[DirectionType.AHEAD] = aheadUnit
@@ -49,14 +49,14 @@ class GridRegion(val uuid: UUID) {
      * unit数を計算して返します。
      * @return unit数
      */
-    public fun calcGridUnitAmount() : Int = (aheadUnit + 1 + behindUnit) * (rightUnit + 1 + leftUnit)
+    fun calcGridUnitAmount() : Int = (aheadUnit + 1 + behindUnit) * (rightUnit + 1 + leftUnit)
 
     /**
      * グリッドが拡大可能かを返します
      * @param type 方向Enum
      * @return true: 拡張可能 / false: 拡張不可能
      */
-    public fun canExtendGrid(type: DirectionType) : Boolean {
+    fun canExtendGrid(type: DirectionType) : Boolean {
         val unitLimit = config.unitLimit
         val unitMap = getUnitMap()
 
@@ -85,7 +85,7 @@ class GridRegion(val uuid: UUID) {
      * @param type 方向Enum
      * @return true: 縮小可能 / false: 縮小不可能
      */
-    public fun canReduceGrid(type: DirectionType) : Boolean =
+    fun canReduceGrid(type: DirectionType) : Boolean =
             0 <= ((getUnitMap()[type] ?: 0) - unitPerClick)
 
     /**
@@ -93,7 +93,7 @@ class GridRegion(val uuid: UUID) {
      * @param type 方向Enum
      * @param amount 設定値
      */
-    public fun setUnitAmount(type: DirectionType, amount: Int) {
+    fun setUnitAmount(type: DirectionType, amount: Int) {
         when (type) {
             DirectionType.AHEAD -> aheadUnit = amount
             DirectionType.BEHIND -> behindUnit = amount
@@ -107,7 +107,7 @@ class GridRegion(val uuid: UUID) {
      * @param type 方向Enum
      * @param increament 増加量
      */
-    public fun addUnitAmount(type: DirectionType, increament: Int) {
+    fun addUnitAmount(type: DirectionType, increament: Int) {
         when (type) {
             DirectionType.AHEAD -> aheadUnit += increament
             DirectionType.BEHIND -> behindUnit += increament
@@ -120,7 +120,7 @@ class GridRegion(val uuid: UUID) {
      * 1クリックでの増加量を変化させます
      * 不正値がセットされていた場合1に戻します
      */
-    public fun toggleUnitPerClick() {
+    fun toggleUnitPerClick() {
         unitPerClick = when (unitPerClick) {
             1 -> 10
             10 -> 100
@@ -132,7 +132,7 @@ class GridRegion(val uuid: UUID) {
     /**
      * グリッド式保護で方向を指定するためのenum
      */
-    public enum class DirectionType {
+    enum class DirectionType {
         AHEAD,
         BEHIND,
         RIGHT,
