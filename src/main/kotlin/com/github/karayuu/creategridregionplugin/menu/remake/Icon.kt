@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack
  */
 data class Icon(
         val material: Material,
-        val data: Int,
+        val damage: Int,
         val amount: Int = 1,
         val isEnchanted: Boolean = false,
         val name: String? = null,
@@ -18,7 +18,7 @@ data class Icon(
 ) {
     val itemStack: ItemStack
         get() {
-            val itemStack = ItemStack(material, amount, data.toShort())
+            val itemStack = ItemStack(material, amount, damage.toShort())
             val itemMeta = itemStack.itemMeta.clone()
 
             if (isEnchanted) {
