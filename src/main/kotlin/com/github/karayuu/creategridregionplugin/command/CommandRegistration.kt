@@ -3,7 +3,7 @@ package com.github.karayuu.creategridregionplugin.command
 import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
 import com.github.karayuu.creategridregionplugin.command.commands.GridCommand
 import com.github.karayuu.creategridregionplugin.util.sendWarning
-import org.bukkit.command.TabExecutor
+import org.bukkit.command.CommandExecutor
 
 /**
  * Created by karayuu on 2017/12/24
@@ -19,7 +19,7 @@ object CommandRegistration {
     /**
      * 指定されたexecutorと名前(name)を結び付けてpluginに登録
      */
-    private fun registCommand(executor: TabExecutor, name: String) {
+    private fun registCommand(executor: CommandExecutor, name: String) {
         CreateGridRegionPlugin.plugin.getCommand(name).also { pluginCommand ->
             if (pluginCommand == null) {
                 sendWarning("${executor::class.java.simpleName} を登録できませんでした。")
