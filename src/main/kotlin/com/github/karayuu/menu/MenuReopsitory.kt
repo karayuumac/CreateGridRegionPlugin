@@ -1,6 +1,6 @@
 package com.github.karayuu.menu
 
-import com.github.karayuu.menu.menus.GridMenu
+import com.github.karayuu.menu.menus.grid.GridMenu
 import com.github.karayuu.player.PlayerData
 import org.bukkit.event.player.PlayerInteractEvent
 

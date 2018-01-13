@@ -1,6 +1,6 @@
 package com.github.karayuu.command.commands
 
-import com.github.karayuu.menu.menus.GridMenu
+import com.github.karayuu.menu.menus.grid.GridMenu
 import com.github.karayuu.util.toPlayerData
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender

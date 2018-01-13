@@ -1,4 +1,4 @@
-package com.github.karayuu.menu.menus
+package com.github.karayuu.menu.menus.grid
 
 import com.github.karayuu.CreateGridRegionPlugin
 import com.github.karayuu.menu.Menu
@@ -189,7 +189,7 @@ object GridMenu : Menu() {
         addLore("${ChatColor.GREEN}左クリックで増加",
                 "${ChatColor.RED}右クリックで減少",
                 "${ChatColor.GRAY}---------------",
-                "${ChatColor.GRAY}方向：${ChatColor.AQUA}${getPlayerDirectionString(playerData.player)[directionType]}", prefix = "")
+                "${ChatColor.GRAY}方向：${ChatColor.AQUA}${playerData.player.getDirectionString(directionType)}", prefix = "")
         if (!playerData.gridRegion.canExtendGrid(directionType)) cantExtendLore()
         if (!playerData.gridRegion.canReduceGrid(directionType)) cantReduceLore()
     }
@@ -240,7 +240,7 @@ object GridMenu : Menu() {
         val gridData = playerData.gridRegion
         val unitMap = gridData.getUnitMap()
         val player = playerData.player
-        val direction = getPlayerDirection(player)
+        val direction = player.getDirection()
         val world = player.world
 
         val aheadUnitAmount = unitMap[DirectionType.AHEAD] ?: 0
@@ -347,13 +347,13 @@ object GridMenu : Menu() {
         if (playerX % 15 == 0) {
             result["x"] = playerX.toDouble()
         } else {
-            result["x"] = Math.ceil(((playerX / 15) * 15).toDouble())
+            result["x"] = Math.ceil((playerX / 15).toDouble()) * 15
         }
 
         if (playerZ % 15 == 0) {
             result["z"] = playerZ.toDouble()
         } else {
-            result["z"] = Math.ceil(((playerZ / 15) * 15).toDouble())
+            result["z"] = Math.ceil((playerZ / 15).toDouble()) * 15
         }
 
         return result.toMap()

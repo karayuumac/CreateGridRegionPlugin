@@ -11,10 +11,9 @@ import org.bukkit.entity.Player
 
 /**
  * プレイヤーのDirectionを取得します
- * @param player 該当プレイヤー
  * @return PlayerのDirection
  */
-fun getPlayerDirection(player: Player) : Direction {
+fun Player.getDirection() : Direction {
     var rotation: Float = (player.location.yaw + 180) % 360
 
     if (rotation < 0) rotation += 360
@@ -28,11 +27,11 @@ fun getPlayerDirection(player: Player) : Direction {
 }
 
 /**
- * プレイヤーの方向と方角のMapを取得します
- * @param player 該当プレイヤー
- * @return DirectionTypeとString(方角)のMap
+ * プレイヤーの方角を日本語で取得します
+ * @param type プレイヤーの前・後ろ・右・左(DirectionType)
+ * @return 方角[日本語(英語)]
  */
-fun getPlayerDirectionString(player: Player) : Map<GridRegion.DirectionType, String> {
+fun Player.getDirectionString(type: GridRegion.DirectionType) : String {
     var rotation: Float = (player.location.yaw + 180) % 360
     val result: MutableMap<GridRegion.DirectionType, String> = mutableMapOf()
 
@@ -64,7 +63,7 @@ fun getPlayerDirectionString(player: Player) : Map<GridRegion.DirectionType, Str
         result[GridRegion.DirectionType.LEFT] = "西(West)"
         result[GridRegion.DirectionType.RIGHT] = "東(East)"
     }
-    return result
+    return result[type] ?: throw IllegalStateException("[CreateGridRegionPlugin]方角処理で重大なエラー。開発者に報告してください。")
 }
 
 enum class Direction {
