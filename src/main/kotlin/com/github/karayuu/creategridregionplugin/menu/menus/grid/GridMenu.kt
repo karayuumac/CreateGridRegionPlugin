@@ -28,11 +28,10 @@ import java.text.NumberFormat
 object GridMenu : Menu() {
     private val config = CreateGridRegionPlugin.configFile
     
-    override val type: InventoryType
-        get() = InventoryType.DISPENSER
+    override val type: InventoryType = InventoryType.DISPENSER
     override val openSound = SoundConfiguration(Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
-    override fun getTitle(playerData: PlayerData): String =
-            "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}" + "グリッド式保護メニュー"
+
+    override fun getTitle(playerData: PlayerData) = "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}グリッド式保護メニュー"
 
     override fun init(playerData: PlayerData) {
         //グリッド設定リセット
