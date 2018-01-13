@@ -22,7 +22,7 @@ import org.bukkit.inventory.InventoryHolder
  */
 abstract class MenuIssuer: InventoryHolder {
     /** メニューのスロットIDとボタンの対応関係を示すMap */
-    abstract val buttonMap: MutableMap<Int, Button>
+    abstract val buttonMap: Map<Int, Button>
 
     /* Menuのタイトル */
     abstract val title: String
