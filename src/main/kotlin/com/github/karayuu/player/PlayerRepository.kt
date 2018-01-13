@@ -1,9 +1,6 @@
 package com.github.karayuu.player
 
 import com.github.karayuu.CreateGridRegionPlugin
-import com.github.karayuu.exception.NotLoadPlayerDataException
-import com.github.karayuu.util.getName
-import com.github.karayuu.util.getPlayer
 import com.github.karayuu.util.sendMessage
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
