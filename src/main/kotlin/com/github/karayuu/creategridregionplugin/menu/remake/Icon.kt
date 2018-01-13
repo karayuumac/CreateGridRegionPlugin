@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack
  */
 data class Icon(
         val material: Material,
-        val damage: Int,
+        val damage: Int = 0,
         val amount: Int = 1,
         val isEnchanted: Boolean = false,
         val name: String? = null,
