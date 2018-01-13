@@ -16,6 +16,9 @@ import org.bukkit.inventory.InventoryHolder
 /**
  * メニューを発行するクラスを抽象化したものです。
  * 実装するクラスは[buttonMap]にスロットとボタンの対応を示してください。
+ *
+ * @author karayuu
+ * @author kory33
  */
 abstract class MenuIssuer: InventoryHolder {
     /** メニューのスロットIDとボタンの対応関係を示すMap */
@@ -34,11 +37,12 @@ abstract class MenuIssuer: InventoryHolder {
     open val closeSound = SoundConfiguration(Sound.BLOCK_FENCE_GATE_OPEN, 1F, 0.1F)
 
     /**
-     * スロット番号から、関連付けられた関数を取得します。
+     * スロット番号から、関連付けられたアクションを取得します。
      * @param slotId Menu内のslot番号
-     * @return 指定スロットのボタンに関連付けられた関数。スロットに何もセットされていないなら`null`
+     * @return 指定スロットのボタンに関連付けられたアクションを取得します。
+     * スロットに何もセットされていないなら空のラムダを返します。
      */
-    fun getBoundFunction(slotId: Int) = buttonMap[slotId]?.let { it::onClick }
+    fun getBoundAction(slotId: Int) = buttonMap[slotId]?.action ?: {}
 
     /**
      * インベントリを取得します。
@@ -46,7 +50,7 @@ abstract class MenuIssuer: InventoryHolder {
      */
     override fun getInventory(): Inventory = Bukkit.createInventory(this, size, title).also { inventory ->
         buttonMap.filterKeys { it < size }.forEach { (slotNumber, button) ->
-            inventory.setItem(slotNumber, button.getItemStack())
+            inventory.setItem(slotNumber, button.icon.itemStack)
         }
     }
 }
