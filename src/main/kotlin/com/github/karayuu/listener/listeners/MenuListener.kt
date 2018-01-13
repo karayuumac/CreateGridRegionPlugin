@@ -21,7 +21,7 @@ class MenuListener : Listener {
         val playerData = (event.whoClicked as Player).toPlayerData() ?: return
         val menu = event.inventory.holder as? Menu ?: return
 
-        if (event.clickedInventory != null) {
+        if (event.inventory != null) {
             event.isCancelled = true
             menu.getButton(playerData, event.slot)?.onClick(playerData, event)
         }
