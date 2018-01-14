@@ -38,12 +38,11 @@ class MenuListener : Listener {
             else -> return
         }
 
-        event.player.toPlayerData()?.let { playerData ->
-            MenuReopsitory.getMenuToOpen(playerData, event, trigger)?.let { menu ->
-                event.isCancelled = true
-                menu.openMenu(playerData)
-                menu.init(playerData)
-            }
-        }
+        val playerData = event.player.toPlayerData() ?: return
+        val menu = MenuReopsitory.getMenuToOpen(playerData, event, trigger) ?: return
+
+        event.isCancelled = true
+        menu.openMenu(playerData)
+        menu.init(playerData)
     }
 }
