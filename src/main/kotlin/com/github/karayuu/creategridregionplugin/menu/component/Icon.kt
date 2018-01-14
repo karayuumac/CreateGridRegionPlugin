@@ -1,4 +1,4 @@
-package com.github.karayuu.creategridregionplugin.menu.remake
+package com.github.karayuu.creategridregionplugin.menu.component
 
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment

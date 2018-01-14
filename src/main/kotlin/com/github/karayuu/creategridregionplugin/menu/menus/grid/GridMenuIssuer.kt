@@ -1,9 +1,9 @@
-package com.github.karayuu.creategridregionplugin.menu.remake.menus.grid
+package com.github.karayuu.creategridregionplugin.menu.menus.grid
 
 import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
-import com.github.karayuu.creategridregionplugin.menu.remake.Button
-import com.github.karayuu.creategridregionplugin.menu.remake.Icon
-import com.github.karayuu.creategridregionplugin.menu.remake.MenuIssuer
+import com.github.karayuu.creategridregionplugin.menu.component.Button
+import com.github.karayuu.creategridregionplugin.menu.component.Icon
+import com.github.karayuu.creategridregionplugin.menu.MenuIssuer
 import com.github.karayuu.creategridregionplugin.player.PlayerData
 import com.github.karayuu.creategridregionplugin.player.property.GridRegion.DirectionType
 import com.github.karayuu.creategridregionplugin.util.*
@@ -71,8 +71,8 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuer() {
         val gridRegion = playerData.gridRegion
         val icon0 = Icon(
                 Material.STAINED_GLASS_PANE,
-                name="${ChatColor.GREEN}拡張単位の変更",
-                lore=listOf(
+                name = "${ChatColor.GREEN}拡張単位の変更",
+                lore = listOf(
                         "${ChatColor.GREEN}現在のユニット指定量",
                         "${ChatColor.AQUA}${gridRegion.unitPerClick}${ChatColor.GREEN}ユニット" +
                                 "(${ChatColor.AQUA}${gridRegion.unitPerClick * 15}${ChatColor.GREEN}ブロック)/1クリック",

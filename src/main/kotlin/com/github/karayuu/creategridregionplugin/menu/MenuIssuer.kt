@@ -1,5 +1,6 @@
-package com.github.karayuu.creategridregionplugin.menu.remake
+package com.github.karayuu.creategridregionplugin.menu
 
+import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.util.SoundConfiguration
 import org.bukkit.Bukkit
 import org.bukkit.Sound
