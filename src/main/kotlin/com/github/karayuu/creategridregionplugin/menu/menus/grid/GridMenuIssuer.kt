@@ -82,7 +82,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuer() {
         val button0 = Button(icon0) {
             issueTargetPlayer.playSound(issueTargetPlayer.location, Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
             playerData.gridRegion.toggleUnitPerClick()
-            issueTargetPlayer.openInventory(replicate().inventory)
+            issueTargetPlayer.openInventoryOf(replicate())
         }
 
         val icon1 = Icon(
@@ -144,7 +144,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuer() {
         val button6 = Button(icon6) {
             issueTargetPlayer.playSound(issueTargetPlayer.location, Sound.BLOCK_ANVIL_DESTROY, 0.5F, 1F)
             gridResetFunction(playerData)
-            issueTargetPlayer.openInventory(replicate().inventory)
+            issueTargetPlayer.openInventoryOf(replicate())
         }
 
         val icon7 = Icon(
@@ -238,7 +238,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuer() {
 
         setWGSelection(playerData)
         canCreateRegion(playerData)
-        issueTargetPlayer.openInventory(replicate().inventory)
+        issueTargetPlayer.openInventoryOf(replicate())
     }
 
     private fun gridResetFunction(playerData: PlayerData) {
