@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
  */
 class MenuListener : Listener {
     @EventHandler
-    fun onNormal(event: InventoryClickEvent) {
+    fun onMenuClick(event: InventoryClickEvent) {
         // インベントリの発行者がMenuIssuerでないならreturn
         val menuIssuer = event.inventory?.holder as? MenuIssuer ?: return
 
