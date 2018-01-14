@@ -3,6 +3,8 @@ package com.github.karayuu.creategridregionplugin.util
 import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
 import com.github.karayuu.creategridregionplugin.player.PlayerRepository
 import org.bukkit.entity.Player
+import org.bukkit.inventory.InventoryHolder
+import org.bukkit.inventory.InventoryView
 import java.util.*
 
 /**
@@ -46,3 +48,10 @@ fun getName(uuid: UUID): String = getPlayer(uuid)?.name ?: "No Player"
  * @return 該当するプレイヤーのplayerData
  */
 fun Player.toPlayerData() = PlayerRepository.getPlayerData(this)
+
+/**
+ * Playerが与えられた[inventoryHolder]のインベントリを開きます。
+ * @param [inventoryHolder] 開くインベントリの所有者
+ * @return 開かれたインベントリに対応する[InventoryView]
+ */
+fun Player.openInventoryOf(inventoryHolder: InventoryHolder) = inventoryHolder.inventory?.let { openInventory(it) }
