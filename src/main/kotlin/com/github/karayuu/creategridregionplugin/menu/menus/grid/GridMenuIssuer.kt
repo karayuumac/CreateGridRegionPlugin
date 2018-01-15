@@ -49,23 +49,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
     override val buttonMap: Map<Int, Button>
 
     init {
-        val gridData = playerData.gridRegion
-        val issueTargetPlayer = playerData.player
-
-        //各種unit数を0にリセット
-        for (type in DirectionType.values()) {
-            gridData.setUnitAmount(type, 0)
-        }
-
-        //始点座標Map(最短)
-        val start: Map<String, Double> = getNearlyUnitStart(issueTargetPlayer)
-        //終点座標Map(最短)
-        val end: Map<String, Double> = getNearlyUnitEnd(issueTargetPlayer)
-
-        //範囲選択
-        wgSelect(Location(issueTargetPlayer.world, start["x"] ?: 0.0, 0.0, start["z"] ?: 0.0),
-                Location(issueTargetPlayer.world, end["x"] ?: 0.0, 256.0, end["z"] ?: 0.0), issueTargetPlayer)
-        canCreateRegion(playerData)
+        gridResetFunction()
 
         //NumberFormat
         val nfNum = NumberFormat.getNumberInstance()
@@ -203,6 +187,32 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                 Pair(7, button7),
                 Pair(8, button8)
         )
+    }
+
+    private fun replicate() = GridMenuIssuer(playerData)
+
+    // ---------------------------------------------------------------- //
+    // TODO これより下にあるメソッドはこのクラスに属するべきではありません
+    // ---------------------------------------------------------------- //
+
+    private fun gridResetFunction() {
+        val gridData = playerData.gridRegion
+        val issueTargetPlayer = playerData.player
+
+        //各種unit数を0にリセット
+        for (type in DirectionType.values()) {
+            gridData.setUnitAmount(type, 0)
+        }
+
+        //始点座標Map(最短)
+        val start: Map<String, Double> = getNearlyUnitStart(issueTargetPlayer)
+        //終点座標Map(最短)
+        val end: Map<String, Double> = getNearlyUnitEnd(issueTargetPlayer)
+
+        //範囲選択
+        wgSelect(Location(issueTargetPlayer.world, start["x"] ?: 0.0, 0.0, start["z"] ?: 0.0),
+                Location(issueTargetPlayer.world, end["x"] ?: 0.0, 256.0, end["z"] ?: 0.0), issueTargetPlayer)
+        canCreateRegion(playerData)
     }
 
     private fun getGridStatesLore(playerData: PlayerData, directionType: DirectionType) = arrayListOf(
@@ -398,6 +408,4 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
 
         return resultMap.toMap()
     }
-
-    private fun replicate() = GridMenuIssuer(playerData)
 }
