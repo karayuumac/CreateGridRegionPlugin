@@ -1,6 +1,7 @@
 package com.github.karayuu.creategridregionplugin.player.property
 
 import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
+import com.github.karayuu.creategridregionplugin.util.RelativeDirection
 import java.util.*
 
 /**
@@ -34,13 +35,13 @@ class GridRegion(val uuid: UUID) {
      * すべての方向のunit数を格納したMapを返します。
      * @return すべての方向のunit数を格納したMap
      */
-    fun getUnitMap() : Map<DirectionType, Int> {
-        val unitMap: MutableMap<DirectionType, Int> = mutableMapOf()
+    fun getUnitMap() : Map<RelativeDirection, Int> {
+        val unitMap: MutableMap<RelativeDirection, Int> = mutableMapOf()
 
-        unitMap[DirectionType.AHEAD] = aheadUnit
-        unitMap[DirectionType.BEHIND] = behindUnit
-        unitMap[DirectionType.RIGHT] = rightUnit
-        unitMap[DirectionType.LEFT] =leftUnit
+        unitMap[RelativeDirection.AHEAD] = aheadUnit
+        unitMap[RelativeDirection.BEHIND] = behindUnit
+        unitMap[RelativeDirection.RIGHT] = rightUnit
+        unitMap[RelativeDirection.LEFT] =leftUnit
 
         return unitMap.toMap()
     }
@@ -56,7 +57,7 @@ class GridRegion(val uuid: UUID) {
      * @param type 方向Enum
      * @return true: 拡張可能 / false: 拡張不可能
      */
-    fun canExtendGrid(type: DirectionType) : Boolean {
+    fun canExtendGrid(type: RelativeDirection) : Boolean {
         val unitLimit = config.unitLimit
         val unitMap = getUnitMap()
 
@@ -64,17 +65,17 @@ class GridRegion(val uuid: UUID) {
         val assumedAmount = (unitMap[type] ?: 0) + unitPerClick
 
         //各種設定値
-        val ahead = unitMap[DirectionType.AHEAD] ?: 0
-        val behind = unitMap[DirectionType.BEHIND] ?: 0
-        val right = unitMap[DirectionType.RIGHT] ?: 0
-        val left = unitMap[DirectionType.LEFT] ?: 0
+        val ahead = unitMap[RelativeDirection.AHEAD] ?: 0
+        val behind = unitMap[RelativeDirection.BEHIND] ?: 0
+        val right = unitMap[RelativeDirection.RIGHT] ?: 0
+        val left = unitMap[RelativeDirection.LEFT] ?: 0
 
         //合計unit数(判断用)
         val assumedUnitAmount = when (type) {
-            DirectionType.AHEAD -> (assumedAmount + 1 + behind) * (right + 1 + left)
-            DirectionType.BEHIND -> (ahead + 1 + assumedAmount) * (right + 1 + left)
-            DirectionType.RIGHT -> (ahead + 1 + behind) * (assumedAmount + 1 + left)
-            DirectionType.LEFT -> (ahead + 1 + behind) * (right + 1 + assumedAmount)
+            RelativeDirection.AHEAD -> (assumedAmount + 1 + behind) * (right + 1 + left)
+            RelativeDirection.BEHIND -> (ahead + 1 + assumedAmount) * (right + 1 + left)
+            RelativeDirection.RIGHT -> (ahead + 1 + behind) * (assumedAmount + 1 + left)
+            RelativeDirection.LEFT -> (ahead + 1 + behind) * (right + 1 + assumedAmount)
         }
 
         return assumedUnitAmount <= unitLimit
@@ -85,7 +86,7 @@ class GridRegion(val uuid: UUID) {
      * @param type 方向Enum
      * @return true: 縮小可能 / false: 縮小不可能
      */
-    fun canReduceGrid(type: DirectionType) : Boolean =
+    fun canReduceGrid(type: RelativeDirection) : Boolean =
             0 <= ((getUnitMap()[type] ?: 0) - unitPerClick)
 
     /**
@@ -93,12 +94,12 @@ class GridRegion(val uuid: UUID) {
      * @param type 方向Enum
      * @param amount 設定値
      */
-    fun setUnitAmount(type: DirectionType, amount: Int) {
+    fun setUnitAmount(type: RelativeDirection, amount: Int) {
         when (type) {
-            DirectionType.AHEAD -> aheadUnit = amount
-            DirectionType.BEHIND -> behindUnit = amount
-            DirectionType.RIGHT -> rightUnit = amount
-            DirectionType.LEFT -> leftUnit = amount
+            RelativeDirection.AHEAD -> aheadUnit = amount
+            RelativeDirection.BEHIND -> behindUnit = amount
+            RelativeDirection.RIGHT -> rightUnit = amount
+            RelativeDirection.LEFT -> leftUnit = amount
         }
     }
 
@@ -107,12 +108,12 @@ class GridRegion(val uuid: UUID) {
      * @param type 方向Enum
      * @param increament 増加量
      */
-    fun addUnitAmount(type: DirectionType, increament: Int) {
+    fun addUnitAmount(type: RelativeDirection, increament: Int) {
         when (type) {
-            DirectionType.AHEAD -> aheadUnit += increament
-            DirectionType.BEHIND -> behindUnit += increament
-            DirectionType.RIGHT -> rightUnit += increament
-            DirectionType.LEFT -> leftUnit += increament
+            RelativeDirection.AHEAD -> aheadUnit += increament
+            RelativeDirection.BEHIND -> behindUnit += increament
+            RelativeDirection.RIGHT -> rightUnit += increament
+            RelativeDirection.LEFT -> leftUnit += increament
         }
     }
 
@@ -129,13 +130,4 @@ class GridRegion(val uuid: UUID) {
         }
     }
 
-    /**
-     * グリッド式保護で方向を指定するためのenum
-     */
-    enum class DirectionType {
-        AHEAD,
-        BEHIND,
-        RIGHT,
-        LEFT
-    }
 }

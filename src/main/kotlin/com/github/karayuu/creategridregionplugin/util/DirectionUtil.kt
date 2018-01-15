@@ -1,6 +1,5 @@
 package com.github.karayuu.creategridregionplugin.util
 
-import com.github.karayuu.creategridregionplugin.player.property.GridRegion
 import org.bukkit.entity.Player
 
 /**
@@ -10,56 +9,68 @@ import org.bukkit.entity.Player
  */
 
 /**
- * プレイヤーのDirectionを取得します
- * @return PlayerのDirection
+ * プレイヤーが向いている方位を取得します
+ * @return [CardinalDirection]で表される方位
  */
-fun Player.getDirection() : Direction {
-    var rotation: Float = (player.location.yaw + 180) % 360
-
-    if (rotation < 0) rotation += 360
-
-    if (0 <= rotation && rotation < 45 || 315 <= rotation && rotation < 360) return Direction.NORTH
-    if (45 <= rotation && rotation < 135) return Direction.EAST
-    if (135 <= rotation && rotation < 225) return Direction.SOUTH
-    if (225 <= rotation && rotation < 315) return Direction.WEST
-    throw IllegalStateException("[CreateGridRegionPlugin]方角処理で重大なエラー。開発者に報告してください。")
-}
+fun Player.getCardinalDirection() = CardinalDirection.fromLocation(location)
 
 /**
  * プレイヤーの方角を日本語で取得します
  * @param type プレイヤーの前・後ろ・右・左(DirectionType)
+ * @deprecated use [cardinalDirectionOn]
  * @return 方角[日本語(英語)]
  */
-fun Player.getDirectionString(type: GridRegion.DirectionType) : String {
+fun Player.getDirectionString(type: RelativeDirection) : String {
     var rotation: Float = (player.location.yaw + 180) % 360
-    val result: MutableMap<GridRegion.DirectionType, String> = mutableMapOf()
+    val result: MutableMap<RelativeDirection, String> = mutableMapOf()
 
     if (rotation < 0) rotation += 360
 
     if (0 <= rotation && rotation < 45 || 315 <= rotation && rotation < 360) {
-        result[GridRegion.DirectionType.BEHIND] = "南(South)"
-        result[GridRegion.DirectionType.AHEAD] = "北(North)"
-        result[GridRegion.DirectionType.LEFT] = "西(West)"
-        result[GridRegion.DirectionType.RIGHT] = "東(East)"
+        result[RelativeDirection.BEHIND] = "南(South)"
+        result[RelativeDirection.AHEAD] = "北(North)"
+        result[RelativeDirection.LEFT] = "西(West)"
+        result[RelativeDirection.RIGHT] = "東(East)"
     } else if (45 <= rotation && rotation < 135) {
-        result[GridRegion.DirectionType.RIGHT] = "南(South)"
-        result[GridRegion.DirectionType.LEFT] = "北(North)"
-        result[GridRegion.DirectionType.BEHIND] = "西(West)"
-        result[GridRegion.DirectionType.AHEAD] = "東(East)"
+        result[RelativeDirection.RIGHT] = "南(South)"
+        result[RelativeDirection.LEFT] = "北(North)"
+        result[RelativeDirection.BEHIND] = "西(West)"
+        result[RelativeDirection.AHEAD] = "東(East)"
     } else if (135 <= rotation && rotation < 225) {
-        result[GridRegion.DirectionType.AHEAD] = "南(South)"
-        result[GridRegion.DirectionType.BEHIND] = "北(North)"
-        result[GridRegion.DirectionType.RIGHT] = "西(West)"
-        result[GridRegion.DirectionType.LEFT] = "東(East)"
+        result[RelativeDirection.AHEAD] = "南(South)"
+        result[RelativeDirection.BEHIND] = "北(North)"
+        result[RelativeDirection.RIGHT] = "西(West)"
+        result[RelativeDirection.LEFT] = "東(East)"
     } else if (225 <= rotation && rotation < 315) {
-        result[GridRegion.DirectionType.LEFT] = "南(South)"
-        result[GridRegion.DirectionType.RIGHT] = "北(North)"
-        result[GridRegion.DirectionType.AHEAD] = "西(West)"
-        result[GridRegion.DirectionType.BEHIND] = "東(East)"
+        result[RelativeDirection.LEFT] = "南(South)"
+        result[RelativeDirection.RIGHT] = "北(North)"
+        result[RelativeDirection.AHEAD] = "西(West)"
+        result[RelativeDirection.BEHIND] = "東(East)"
     }
     return result[type] ?: throw IllegalStateException("[CreateGridRegionPlugin]方角処理で重大なエラー。開発者に報告してください。")
 }
 
-enum class Direction {
-    NORTH, SOUTH, EAST, WEST
+private tailrec fun <T> T.repeatedlyApply(time: Int, function: (T) -> T): T = when {
+    time < 1 -> this
+    else -> repeatedlyApply(time - 1, function)
 }
+
+/**
+ * プレーヤーの相対方向がどの方位を指しているかの対応関係を取得します。
+ * @return [RelativeDirection] がどの [CardinalDirection] に対応しているかの [Map]
+ */
+fun Player.getRelationToCardinalDirection() : Map<RelativeDirection, CardinalDirection> {
+    val aheadCardinalDirection = getCardinalDirection()
+
+    // 右向きに回転する回数
+    val turnNumbers = (0 until 4)
+
+    return turnNumbers.map { turnNumber ->
+        val relativeDirection = RelativeDirection.AHEAD.repeatedlyApply(turnNumber) { it.onRightHand() }
+        val cardinalDirection = aheadCardinalDirection.repeatedlyApply(turnNumber) { it.onRightHand() }
+
+        relativeDirection to cardinalDirection
+    }.toMap()
+}
+
+fun Player.cardinalDirectionOn(direction: RelativeDirection) = getRelationToCardinalDirection()[direction]!!

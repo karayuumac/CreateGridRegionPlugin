@@ -5,7 +5,7 @@ import com.github.karayuu.creategridregionplugin.menu.MenuIssuerWithSound
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
 import com.github.karayuu.creategridregionplugin.player.PlayerData
-import com.github.karayuu.creategridregionplugin.player.property.GridRegion.DirectionType
+import com.github.karayuu.creategridregionplugin.util.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.*
 import com.sk89q.worldedit.bukkit.selections.Selection
 import com.sk89q.worldguard.bukkit.WorldConfiguration
@@ -75,20 +75,20 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                 Material.STAINED_GLASS_PANE,
                 damage = 14,
                 name = "${ChatColor.DARK_GREEN}前に${playerData.gridRegion.unitPerClick}ユニット増やす/減らす",
-                lore = getGridStatesLore(playerData, DirectionType.AHEAD)
+                lore = getGridStatesLore(playerData, RelativeDirection.AHEAD)
         )
         val button1 = Button(icon1) { event ->
-            gridExtendAndReduceSafely(playerData, DirectionType.AHEAD, event)
+            gridExtendAndReduceSafely(playerData, RelativeDirection.AHEAD, event)
         }
 
         val icon3 = Icon(
                 Material.STAINED_GLASS_PANE,
                 damage = 10,
                 name = "${ChatColor.DARK_GREEN}左に${playerData.gridRegion.unitPerClick}ユニット増やす/減らす",
-                lore = getGridStatesLore(playerData, DirectionType.LEFT)
+                lore = getGridStatesLore(playerData, RelativeDirection.LEFT)
         )
         val button3 = Button(icon3) { event ->
-            gridExtendAndReduceSafely(playerData, DirectionType.LEFT, event)
+            gridExtendAndReduceSafely(playerData, RelativeDirection.LEFT, event)
         }
 
         val unitMap = playerData.gridRegion.getUnitMap()
@@ -97,14 +97,14 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                 damage = 11,
                 name = "${ChatColor.DARK_GREEN}現在の設定",
                 lore = listOf(
-                        "${ChatColor.GRAY}前方向：${ChatColor.AQUA}${unitMap[DirectionType.AHEAD]}${ChatColor.GRAY}ユニット"
-                                + "(${ChatColor.AQUA}${nfNum.format((unitMap[DirectionType.AHEAD] ?: 0) * 15)}${ChatColor.GRAY}ブロック)",
-                        "${ChatColor.GRAY}後ろ方向：${ChatColor.AQUA}${unitMap[DirectionType.BEHIND]}${ChatColor.GRAY}ユニット"
-                                + "(${ChatColor.AQUA}${nfNum.format((unitMap[DirectionType.BEHIND] ?: 0) * 15)}${ChatColor.GRAY}ブロック)",
-                        "${ChatColor.GRAY}右方向：${ChatColor.AQUA}${unitMap[DirectionType.RIGHT]}${ChatColor.GRAY}ユニット"
-                                + "(${ChatColor.AQUA}${nfNum.format((unitMap[DirectionType.RIGHT] ?: 0) * 15)}${ChatColor.GRAY}ブロック)",
-                        "${ChatColor.GRAY}左方向：${ChatColor.AQUA}${unitMap[DirectionType.LEFT]}${ChatColor.GRAY}ユニット"
-                                + "(${ChatColor.AQUA}${nfNum.format((unitMap[DirectionType.LEFT] ?: 0) * 15)}${ChatColor.GRAY}ブロック)",
+                        "${ChatColor.GRAY}前方向：${ChatColor.AQUA}${unitMap[RelativeDirection.AHEAD]}${ChatColor.GRAY}ユニット"
+                                + "(${ChatColor.AQUA}${nfNum.format((unitMap[RelativeDirection.AHEAD] ?: 0) * 15)}${ChatColor.GRAY}ブロック)",
+                        "${ChatColor.GRAY}後ろ方向：${ChatColor.AQUA}${unitMap[RelativeDirection.BEHIND]}${ChatColor.GRAY}ユニット"
+                                + "(${ChatColor.AQUA}${nfNum.format((unitMap[RelativeDirection.BEHIND] ?: 0) * 15)}${ChatColor.GRAY}ブロック)",
+                        "${ChatColor.GRAY}右方向：${ChatColor.AQUA}${unitMap[RelativeDirection.RIGHT]}${ChatColor.GRAY}ユニット"
+                                + "(${ChatColor.AQUA}${nfNum.format((unitMap[RelativeDirection.RIGHT] ?: 0) * 15)}${ChatColor.GRAY}ブロック)",
+                        "${ChatColor.GRAY}左方向：${ChatColor.AQUA}${unitMap[RelativeDirection.LEFT]}${ChatColor.GRAY}ユニット"
+                                + "(${ChatColor.AQUA}${nfNum.format((unitMap[RelativeDirection.LEFT] ?: 0) * 15)}${ChatColor.GRAY}ブロック)",
                         "${ChatColor.GRAY}保護ユニット数：${ChatColor.AQUA}${playerData.gridRegion.calcGridUnitAmount()}",
                         "${ChatColor.GRAY}保護ユニット上限値：${ChatColor.RED}${config.unitLimit}"
                 )
@@ -115,10 +115,10 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                 Material.STAINED_GLASS_PANE,
                 damage = 5,
                 name = "${ChatColor.DARK_GREEN}右に${playerData.gridRegion.unitPerClick}ユニット増やす/減らす",
-                lore = getGridStatesLore(playerData, DirectionType.RIGHT)
+                lore = getGridStatesLore(playerData, RelativeDirection.RIGHT)
         )
         val button5 = Button(icon5) { event ->
-            gridExtendAndReduceSafely(playerData, DirectionType.RIGHT, event)
+            gridExtendAndReduceSafely(playerData, RelativeDirection.RIGHT, event)
         }
 
         val icon6 = Icon(
@@ -137,10 +137,10 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                 Material.STAINED_GLASS_PANE,
                 damage = 13,
                 name = "${ChatColor.DARK_GREEN}後ろに${playerData.gridRegion.unitPerClick}ユニット増やす/減らす",
-                lore = getGridStatesLore(playerData, DirectionType.BEHIND)
+                lore = getGridStatesLore(playerData, RelativeDirection.BEHIND)
         )
         val button7 = Button(icon7) { event ->
-            gridExtendAndReduceSafely(playerData, DirectionType.BEHIND, event)
+            gridExtendAndReduceSafely(playerData, RelativeDirection.BEHIND, event)
         }
 
         val icon8 = if (!playerData.gridRegion.canCreateRegion) {
@@ -200,7 +200,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
         val issueTargetPlayer = playerData.player
 
         //各種unit数を0にリセット
-        for (type in DirectionType.values()) {
+        for (type in RelativeDirection.values()) {
             gridData.setUnitAmount(type, 0)
         }
 
@@ -215,7 +215,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
         canCreateRegion(playerData)
     }
 
-    private fun getGridStatesLore(playerData: PlayerData, directionType: DirectionType) = arrayListOf(
+    private fun getGridStatesLore(playerData: PlayerData, directionType: RelativeDirection) = arrayListOf(
             "${ChatColor.GREEN}左クリックで増加",
             "${ChatColor.RED}右クリックで減少",
             "${ChatColor.GRAY}---------------",
@@ -230,7 +230,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
         }
     }
 
-    private fun gridExtendAndReduceSafely(playerData: PlayerData, directionType: DirectionType, event: InventoryClickEvent) {
+    private fun gridExtendAndReduceSafely(playerData: PlayerData, directionType: RelativeDirection, event: InventoryClickEvent) {
         val gridData = playerData.gridRegion
         val player = playerData.player
 
@@ -257,7 +257,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
         val gridData = playerData.gridRegion
         val player = playerData.player
         //各種unit数を0にリセット
-        for (type in DirectionType.values()) {
+        for (type in RelativeDirection.values()) {
             gridData.setUnitAmount(type, 0)
         }
         //始点座標Map(最短)
@@ -274,13 +274,13 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
         val gridData = playerData.gridRegion
         val unitMap = gridData.getUnitMap()
         val player = playerData.player
-        val direction = player.getDirection()
+        val direction = player.getCardinalDirection()
         val world = player.world
 
-        val aheadUnitAmount = unitMap[DirectionType.AHEAD] ?: 0
-        val leftUnitAmount = unitMap[DirectionType.LEFT] ?: 0
-        val rightUnitAmount = unitMap[DirectionType.RIGHT] ?: 0
-        val behindUnitAmount = unitMap[DirectionType.BEHIND] ?: 0
+        val aheadUnitAmount = unitMap[RelativeDirection.AHEAD] ?: 0
+        val leftUnitAmount = unitMap[RelativeDirection.LEFT] ?: 0
+        val rightUnitAmount = unitMap[RelativeDirection.RIGHT] ?: 0
+        val behindUnitAmount = unitMap[RelativeDirection.BEHIND] ?: 0
 
         //0ユニット指定の始点/終点のx,z座標
         val startX = getNearlyUnitStart(player)["x"] ?: 0.0
@@ -292,25 +292,25 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
         val endLoc = Location(world, 0.0, 256.0, 0.0)
 
         when(direction) {
-            Direction.NORTH -> {
+            CardinalDirection.NORTH -> {
                 startLoc.x = startX - 15 * leftUnitAmount
                 startLoc.z = startZ - 15 * aheadUnitAmount
                 endLoc.x = endX + 15 * rightUnitAmount
                 endLoc.z = endZ + 15 * behindUnitAmount
             }
-            Direction.EAST -> {
+            CardinalDirection.EAST -> {
                 startLoc.x = startX - 15 * behindUnitAmount
                 startLoc.z = startZ - 15 * leftUnitAmount
                 endLoc.x = endX + 15 * aheadUnitAmount
                 endLoc.z = endZ + 15 * rightUnitAmount
             }
-            Direction.SOUTH -> {
+            CardinalDirection.SOUTH -> {
                 startLoc.x = startX - 15 * rightUnitAmount
                 startLoc.z = startZ - 15 * behindUnitAmount
                 endLoc.x = endX + 15 * leftUnitAmount
                 endLoc.z = endZ + 15 * aheadUnitAmount
             }
-            Direction.WEST -> {
+            CardinalDirection.WEST -> {
                 startLoc.x = startX - 15 * aheadUnitAmount
                 startLoc.z = startZ - 15 * rightUnitAmount
                 endLoc.x = endX + 15 * behindUnitAmount
