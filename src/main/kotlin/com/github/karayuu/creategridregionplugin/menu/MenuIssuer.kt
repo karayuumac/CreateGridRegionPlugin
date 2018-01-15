@@ -4,6 +4,8 @@ import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.util.SoundConfiguration
 import org.bukkit.Bukkit
 import org.bukkit.Sound
+import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
@@ -25,17 +27,21 @@ abstract class MenuIssuer: InventoryHolder {
     /** メニューのスロットIDとボタンの対応関係を示すMap */
     abstract val buttonMap: Map<Int, Button>
 
-    /* Menuのタイトル */
+    /** Menuのタイトル */
     abstract val title: String
 
     /** インベントリのサイズ */
     open val size = InventoryType.CHEST.defaultSize
 
-    /** プレイヤーがメニューを開いた際の音 */
-    open val openSound = SoundConfiguration(Sound.BLOCK_FENCE_GATE_OPEN, 1F, 0.1F)
+    /**
+     * 発行したメニューが開かれたときのアクションを実行します
+     */
+    abstract fun onOpen(event: InventoryOpenEvent)
 
-    /** プレイヤーがメニューを閉じた際の音 */
-    open val closeSound = SoundConfiguration(Sound.BLOCK_FENCE_GATE_OPEN, 1F, 0.1F)
+    /**
+     * 発行したメニューが閉じられたときのアクションを実行します
+     */
+    abstract fun onClose(event: InventoryCloseEvent)
 
     /**
      * スロット番号から、関連付けられたアクションを取得します。

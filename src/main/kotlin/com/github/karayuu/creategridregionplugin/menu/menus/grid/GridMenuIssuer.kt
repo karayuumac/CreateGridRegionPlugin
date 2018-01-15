@@ -1,9 +1,9 @@
 package com.github.karayuu.creategridregionplugin.menu.menus.grid
 
 import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
+import com.github.karayuu.creategridregionplugin.menu.MenuIssuerWithSound
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
-import com.github.karayuu.creategridregionplugin.menu.MenuIssuer
 import com.github.karayuu.creategridregionplugin.player.PlayerData
 import com.github.karayuu.creategridregionplugin.player.property.GridRegion.DirectionType
 import com.github.karayuu.creategridregionplugin.util.*
@@ -32,15 +32,17 @@ import java.text.NumberFormat
 
 /**
  * グリッドメニューの発行を担当するクラス
+ *
+ * @author karayuu, kory33
  */
-class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuer() {
+class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound() {
     private val config = CreateGridRegionPlugin.configFile
 
     private val issueTargetPlayer = playerData.player
 
     override val size = InventoryType.DISPENSER.defaultSize
 
-    override val openSound = SoundConfiguration(Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
+    override val openingSound = SoundConfiguration(Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
 
     override val title = "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}グリッド式保護メニュー"
 
