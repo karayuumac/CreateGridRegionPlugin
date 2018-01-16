@@ -1,4 +1,4 @@
-package com.github.karayuu.creategridregionplugin.util
+package com.github.karayuu.creategridregionplugin.util.direction
 
 /**
  * 相対的な方向を示す列挙型です。
@@ -13,9 +13,9 @@ enum class RelativeDirection(val localizedName: String) {
      * このオブジェクトが指し示す方向を向いた時に右手にある方向を取得します。
      */
     fun onRightHand() = when (this) {
-        AHEAD  -> RIGHT
-        RIGHT  -> BEHIND
+        AHEAD -> RIGHT
+        RIGHT -> BEHIND
         BEHIND -> LEFT
-        LEFT   -> AHEAD
+        LEFT -> AHEAD
     }
 }

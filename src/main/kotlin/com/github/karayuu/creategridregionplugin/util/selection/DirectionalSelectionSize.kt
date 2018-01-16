@@ -1,6 +1,7 @@
-package com.github.karayuu.creategridregionplugin.util
+package com.github.karayuu.creategridregionplugin.util.selection
 
 import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
+import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 
 /**
  * 選択領域のサイズを方向ごとの単位領域数で表すデータクラスです。

@@ -1,7 +1,6 @@
-package com.github.karayuu.creategridregionplugin.player.property
+package com.github.karayuu.creategridregionplugin.util.selection
 
-import com.github.karayuu.creategridregionplugin.util.DirectionalSelectionSize
-import com.github.karayuu.creategridregionplugin.util.RelativeDirection
+import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 
 /**
  * グリッド領域の選択状態を表すデータクラス

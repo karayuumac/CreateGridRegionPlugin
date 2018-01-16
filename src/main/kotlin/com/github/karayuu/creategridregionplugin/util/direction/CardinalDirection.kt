@@ -1,4 +1,4 @@
-package com.github.karayuu.creategridregionplugin.util
+package com.github.karayuu.creategridregionplugin.util.direction
 
 import org.bukkit.Location
 
@@ -14,9 +14,9 @@ enum class CardinalDirection(val localizedName: String) {
      */
     fun onRightHand() = when(this) {
         NORTH -> EAST
-        EAST  -> SOUTH
+        EAST -> SOUTH
         SOUTH -> WEST
-        WEST  -> NORTH
+        WEST -> NORTH
     }
 
     companion object {

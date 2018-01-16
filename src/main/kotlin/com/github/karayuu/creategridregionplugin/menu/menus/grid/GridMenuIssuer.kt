@@ -6,8 +6,11 @@ import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
 import com.github.karayuu.creategridregionplugin.menu.component.SimpleButton
 import com.github.karayuu.creategridregionplugin.player.PlayerData
-import com.github.karayuu.creategridregionplugin.util.RelativeDirection
+import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.*
+import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection
+import com.github.karayuu.creategridregionplugin.util.direction.getCardinalDirection
+import com.github.karayuu.creategridregionplugin.util.direction.getDirectionString
 import com.sk89q.worldedit.bukkit.selections.Selection
 import com.sk89q.worldguard.bukkit.WorldConfiguration
 import com.sk89q.worldguard.bukkit.commands.AsyncCommandHelper

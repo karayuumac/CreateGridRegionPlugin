@@ -1,7 +1,7 @@
 package com.github.karayuu.creategridregionplugin.player.property
 
 import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
-import com.github.karayuu.creategridregionplugin.util.RelativeDirection
+import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import java.util.*
 
 /**

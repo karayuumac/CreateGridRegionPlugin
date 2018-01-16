@@ -3,7 +3,7 @@ package com.github.karayuu.creategridregionplugin.menu.menus.grid.buttons
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
 import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuIssuerR
-import com.github.karayuu.creategridregionplugin.player.property.GridSelection
+import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import com.github.karayuu.creategridregionplugin.util.SoundConfiguration
 import com.github.karayuu.creategridregionplugin.util.openInventoryOf
 import com.github.karayuu.creategridregionplugin.util.playSound

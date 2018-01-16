@@ -1,4 +1,4 @@
-package com.github.karayuu.creategridregionplugin.util
+package com.github.karayuu.creategridregionplugin.util.direction
 
 import org.bukkit.entity.Player
 
