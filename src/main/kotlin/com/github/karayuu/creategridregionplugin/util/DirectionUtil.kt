@@ -73,4 +73,9 @@ fun Player.getRelationToCardinalDirection() : Map<RelativeDirection, CardinalDir
     }.toMap()
 }
 
+/**
+ * プレーヤーからの相対方向にある方位を取得します。
+ * @param direction プレーヤーからの相対方向
+ * @return プレーヤーからの指定された方向にある方位を表す[CardinalDirection]
+ */
 fun Player.cardinalDirectionOn(direction: RelativeDirection) = getRelationToCardinalDirection()[direction]!!
