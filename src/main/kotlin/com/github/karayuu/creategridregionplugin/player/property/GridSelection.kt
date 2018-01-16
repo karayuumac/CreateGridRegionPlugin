@@ -3,8 +3,6 @@ package com.github.karayuu.creategridregionplugin.player.property
 import com.github.karayuu.creategridregionplugin.util.DirectionalSelectionSize
 import com.github.karayuu.creategridregionplugin.util.RelativeDirection
 
-const val GRID_SIZE = 15
-
 /**
  * グリッド領域の選択状態を表すデータクラス
  *
@@ -84,6 +82,6 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
 
         override fun toString() = amount.toString()
 
-        fun toBlockWidth() = amount * GRID_SIZE
+        fun toBlockWidth() = amount * 15
     }
 }
