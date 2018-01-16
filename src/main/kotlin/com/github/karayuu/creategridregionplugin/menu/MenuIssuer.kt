@@ -1,9 +1,7 @@
 package com.github.karayuu.creategridregionplugin.menu
 
 import com.github.karayuu.creategridregionplugin.menu.component.Button
-import com.github.karayuu.creategridregionplugin.util.SoundConfiguration
 import org.bukkit.Bukkit
-import org.bukkit.Sound
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.inventory.InventoryType

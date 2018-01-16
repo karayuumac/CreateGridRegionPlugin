@@ -4,6 +4,7 @@ import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
 import com.github.karayuu.creategridregionplugin.menu.MenuIssuerWithSound
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
+import com.github.karayuu.creategridregionplugin.menu.component.SimpleButton
 import com.github.karayuu.creategridregionplugin.player.PlayerData
 import com.github.karayuu.creategridregionplugin.util.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.*
@@ -65,7 +66,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                         "${ChatColor.RED}${ChatColor.UNDERLINE}クリックで変更"
                 )
         )
-        val button0 = Button(icon0) {
+        val button0 = SimpleButton(icon0) {
             issueTargetPlayer.playSound(issueTargetPlayer.location, Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
             playerData.gridRegion.toggleUnitPerClick()
             issueTargetPlayer.openInventoryOf(replicate())
@@ -77,7 +78,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                 name = "${ChatColor.DARK_GREEN}前に${playerData.gridRegion.unitPerClick}ユニット増やす/減らす",
                 lore = getGridStatesLore(playerData, RelativeDirection.AHEAD)
         )
-        val button1 = Button(icon1) { event ->
+        val button1 = SimpleButton(icon1) { event ->
             gridExtendAndReduceSafely(playerData, RelativeDirection.AHEAD, event)
         }
 
@@ -87,7 +88,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                 name = "${ChatColor.DARK_GREEN}左に${playerData.gridRegion.unitPerClick}ユニット増やす/減らす",
                 lore = getGridStatesLore(playerData, RelativeDirection.LEFT)
         )
-        val button3 = Button(icon3) { event ->
+        val button3 = SimpleButton(icon3) { event ->
             gridExtendAndReduceSafely(playerData, RelativeDirection.LEFT, event)
         }
 
@@ -109,7 +110,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                         "${ChatColor.GRAY}保護ユニット上限値：${ChatColor.RED}${config.unitLimit}"
                 )
         )
-        val button4 = Button(icon4) {}
+        val button4 = SimpleButton(icon4) {}
 
         val icon5 = Icon(
                 Material.STAINED_GLASS_PANE,
@@ -117,7 +118,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                 name = "${ChatColor.DARK_GREEN}右に${playerData.gridRegion.unitPerClick}ユニット増やす/減らす",
                 lore = getGridStatesLore(playerData, RelativeDirection.RIGHT)
         )
-        val button5 = Button(icon5) { event ->
+        val button5 = SimpleButton(icon5) { event ->
             gridExtendAndReduceSafely(playerData, RelativeDirection.RIGHT, event)
         }
 
@@ -127,7 +128,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                 name = "${ChatColor.RED}全設定リセット",
                 lore = listOf("${ChatColor.RED}${ChatColor.UNDERLINE}取扱注意！！")
         )
-        val button6 = Button(icon6) {
+        val button6 = SimpleButton(icon6) {
             issueTargetPlayer.playSound(issueTargetPlayer.location, Sound.BLOCK_ANVIL_DESTROY, 0.5F, 1F)
             gridResetFunction(playerData)
             issueTargetPlayer.openInventoryOf(replicate())
@@ -139,7 +140,7 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
                 name = "${ChatColor.DARK_GREEN}後ろに${playerData.gridRegion.unitPerClick}ユニット増やす/減らす",
                 lore = getGridStatesLore(playerData, RelativeDirection.BEHIND)
         )
-        val button7 = Button(icon7) { event ->
+        val button7 = SimpleButton(icon7) { event ->
             gridExtendAndReduceSafely(playerData, RelativeDirection.BEHIND, event)
         }
 
@@ -163,9 +164,9 @@ class GridMenuIssuer(private val playerData: PlayerData) : MenuIssuerWithSound()
             )
         }
 
-        val button8 = Button(icon8) {
+        val button8 = SimpleButton(icon8) {
             if (!playerData.gridRegion.canCreateRegion) {
-                return@Button
+                return@SimpleButton
             }
 
             val player = playerData.player
