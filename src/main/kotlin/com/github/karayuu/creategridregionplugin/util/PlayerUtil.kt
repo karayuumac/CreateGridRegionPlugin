@@ -63,7 +63,7 @@ fun HumanEntity.openInventoryOf(inventoryHolder: InventoryHolder) = inventoryHol
  */
 fun Player.canCreateRegionWithSelection(): Boolean {
     val config = CreateGridRegionPlugin.configFile
-    val selection: Selection = WORLD_EDIT.getSelection(this)
+    val selection: Selection = WORLD_EDIT.getSelection(this) ?: return false
 
     val manager: RegionManager = WORLD_GUARD.getRegionManager(world)
     val wcfg: WorldConfiguration = WORLD_GUARD.globalStateManager.get(world)

@@ -3,10 +3,10 @@ package com.github.karayuu.creategridregionplugin.menu.menus.grid
 import com.github.karayuu.creategridregionplugin.menu.MenuIssuerWithSound
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.menus.grid.buttons.*
-import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
-import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.SoundConfiguration
+import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.select
+import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import org.bukkit.ChatColor
 import org.bukkit.Sound
 import org.bukkit.entity.Player
@@ -33,20 +33,21 @@ class GridMenuIssuer(private val issueTargetPlayer: Player,
         }
     }
 
-    override val buttonMap: Map<Int, Button> = mapOf(
-            0 to UnitChangeToggleButton(gridSelection, this),
-            1 to extendOrReduceButtonFactory(RelativeDirection.AHEAD, 14),
-            3 to extendOrReduceButtonFactory(RelativeDirection.LEFT, 10),
-            4 to CurrentGridSelectionButton(gridSelection),
-            5 to extendOrReduceButtonFactory(RelativeDirection.RIGHT, 5),
-            6 to ResetButton(),
-            5 to extendOrReduceButtonFactory(RelativeDirection.BEHIND, 13),
-            8 to CreateRegionButton(issueTargetPlayer)
-    )
+    override val buttonMap: Map<Int, Button>
 
     init {
-        val selection = gridSelection.toWorldEditSelection(issueTargetPlayer.location)
-        issueTargetPlayer.select(selection)
+        issueTargetPlayer.select(gridSelection.toWorldEditSelection(issueTargetPlayer.location))
+
+        buttonMap = mapOf(
+                0 to UnitChangeToggleButton(gridSelection, this),
+                1 to extendOrReduceButtonFactory(RelativeDirection.AHEAD, 14),
+                3 to extendOrReduceButtonFactory(RelativeDirection.LEFT, 10),
+                4 to CurrentGridSelectionButton(gridSelection),
+                5 to extendOrReduceButtonFactory(RelativeDirection.RIGHT, 5),
+                6 to ResetButton(),
+                5 to extendOrReduceButtonFactory(RelativeDirection.BEHIND, 13),
+                8 to CreateRegionButton(issueTargetPlayer)
+        )
     }
 
     /**
