@@ -2,8 +2,6 @@ package com.github.karayuu.creategridregionplugin.listener
 
 import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
 import com.github.karayuu.creategridregionplugin.listener.listeners.MenuListener
-import com.github.karayuu.creategridregionplugin.listener.listeners.PlayerJoinListener
-import com.github.karayuu.creategridregionplugin.listener.listeners.PlayerQuitListener
 import org.bukkit.event.Listener
 
 /**
@@ -21,8 +19,6 @@ object ListenerRegistration {
      * ex) registEvent(**Listener())
      */
     fun regist() {
-        registEvent(PlayerJoinListener())
-        registEvent(PlayerQuitListener())
         registEvent(MenuListener())
     }
 

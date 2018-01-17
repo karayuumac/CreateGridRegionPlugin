@@ -2,7 +2,6 @@ package com.github.karayuu.creategridregionplugin
 
 import com.github.karayuu.creategridregionplugin.command.CommandRegistration
 import com.github.karayuu.creategridregionplugin.listener.ListenerRegistration
-import com.github.karayuu.creategridregionplugin.player.PlayerRepository
 import com.github.karayuu.creategridregionplugin.yml.ymls.Config
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
@@ -31,7 +30,6 @@ class CreateGridRegionPlugin : JavaPlugin() {
         configFile = Config(this)
         configFile.loadConfig()
         ListenerRegistration.regist()
-        PlayerRepository.onEnable()
         Bukkit.getServer().logger.info("[CreateGridRegionPlugin] 起動完了")
     }
 

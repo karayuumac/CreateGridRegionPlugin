@@ -1,7 +1,6 @@
 package com.github.karayuu.creategridregionplugin.util
 
 import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
-import com.github.karayuu.creategridregionplugin.player.PlayerRepository
 import com.sk89q.worldedit.bukkit.selections.Selection
 import com.sk89q.worldguard.bukkit.WorldConfiguration
 import com.sk89q.worldguard.bukkit.commands.AsyncCommandHelper
@@ -51,12 +50,6 @@ fun sendMessage(player: Player?, msg: String) = player?.sendMessage(msg)
  * @return プレイヤー名 (if @null then return "No player")
  */
 fun getName(uuid: UUID): String = getPlayer(uuid)?.name ?: "No Player"
-
-/**
- * Playerからプレイヤーデータを取得します。
- * @return 該当するプレイヤーのplayerData
- */
-fun Player.toPlayerData() = PlayerRepository.getPlayerData(this)
 
 /**
  * [HumanEntity]が与えられた[inventoryHolder]のインベントリを開きます。
