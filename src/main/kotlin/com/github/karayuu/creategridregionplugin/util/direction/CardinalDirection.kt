@@ -19,6 +19,15 @@ enum class CardinalDirection(val localizedName: String) {
         WEST -> NORTH
     }
 
+    /**
+     * このオブジェクトが指し示す方向から[time]回時計回りに回転した方位を求めます。
+     */
+    fun turnRight(time: Int): CardinalDirection = when {
+        time == 0 -> this
+        time < 0 -> turnRight((time % 4) + 4)
+        else -> onRightHand().turnRight((time % 4) - 1)
+    }
+
     companion object {
         fun fromLocation(location: Location): CardinalDirection {
             var rotation: Float = (location.yaw + 180) % 360
