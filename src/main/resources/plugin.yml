@@ -1,5 +1,5 @@
 name: CreateGridRegionPlugin
-main: com.github.karayuu.CreateGridRegionPlugin
+main: com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
 version: @version@
 description: Create worldguard region by using grid system.
 
