@@ -29,7 +29,7 @@ class CreateGridRegionPlugin : JavaPlugin() {
         //YmlRegistration.register()
         configFile = Config(this)
         configFile.loadConfig()
-        ListenerRegistration.regist()
+        ListenerRegistration.register()
         Bukkit.getServer().logger.info("[CreateGridRegionPlugin] 起動完了")
     }
 

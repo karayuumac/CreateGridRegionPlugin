@@ -16,12 +16,13 @@ import org.bukkit.event.Listener
 object ListenerRegistration {
     /**
      * Listener登録用関数。Listenerは必ずここに追加してください。
-     * ex) registEvent(**Listener())
+     *
+     * 例) `registerEvent(**Listener())`
      */
-    fun regist() {
-        registEvent(MenuListener())
+    fun register() {
+        registerEvent(MenuListener())
     }
 
-    private fun registEvent(listener: Listener) = CreateGridRegionPlugin.plugin.server.pluginManager.
+    private fun registerEvent(listener: Listener) = CreateGridRegionPlugin.plugin.server.pluginManager.
             registerEvents(listener, CreateGridRegionPlugin.plugin)
 }
