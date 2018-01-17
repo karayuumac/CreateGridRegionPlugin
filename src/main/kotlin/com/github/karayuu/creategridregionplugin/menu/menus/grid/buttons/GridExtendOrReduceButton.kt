@@ -46,7 +46,7 @@ abstract class GridExtendOrReduceButton(private val operationDirection: Relative
             "${ChatColor.GREEN}左クリックで増加",
             "${ChatColor.RED}右クリックで減少",
             "${ChatColor.GRAY}---------------",
-            "${ChatColor.GRAY}方向：${ChatColor.AQUA}${viewingPlayer.cardinalDirectionOn(operationDirection).localizedName}"
+            "${ChatColor.GRAY}方向：${ChatColor.AQUA}${viewingPlayer.location.cardinalDirectionOn(operationDirection).localizedName}"
     ).also {
         if (!gridSelection.canExtendAlong(operationDirection)) {
             it.add("${ChatColor.RED}${ChatColor.UNDERLINE}これ以上拡大できません")

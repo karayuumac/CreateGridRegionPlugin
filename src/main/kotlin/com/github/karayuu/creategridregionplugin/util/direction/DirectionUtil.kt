@@ -1,5 +1,6 @@
 package com.github.karayuu.creategridregionplugin.util.direction
 
+import org.bukkit.Location
 import org.bukkit.entity.Player
 
 /**
@@ -56,11 +57,11 @@ private tailrec fun <T> T.repeatedlyApply(time: Int, function: (T) -> T): T = wh
 }
 
 /**
- * プレーヤーの相対方向がどの方位を指しているかの対応関係を取得します。
+ * [Location]からの相対方向がどの方位を指しているかの対応関係を取得します。
  * @return [RelativeDirection] がどの [CardinalDirection] に対応しているかの [Map]
  */
-fun Player.getRelationToCardinalDirection() : Map<RelativeDirection, CardinalDirection> {
-    val aheadCardinalDirection = getCardinalDirection()
+fun Location.getRelationToCardinalDirection() : Map<RelativeDirection, CardinalDirection> {
+    val aheadCardinalDirection = CardinalDirection.fromLocation(this)
 
     // 右向きに回転する回数
     val turnNumbers = (0 until 4)
@@ -74,8 +75,8 @@ fun Player.getRelationToCardinalDirection() : Map<RelativeDirection, CardinalDir
 }
 
 /**
- * プレーヤーからの相対方向にある方位を取得します。
+ * [Location]からの相対方向にある方位を取得します。
  * @param direction プレーヤーからの相対方向
  * @return プレーヤーからの指定された方向にある方位を表す[CardinalDirection]
  */
-fun Player.cardinalDirectionOn(direction: RelativeDirection) = getRelationToCardinalDirection()[direction]!!
+fun Location.cardinalDirectionOn(direction: RelativeDirection) = getRelationToCardinalDirection()[direction]!!
