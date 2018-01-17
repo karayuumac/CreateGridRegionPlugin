@@ -2,7 +2,7 @@ package com.github.karayuu.creategridregionplugin.menu.menus.grid.buttons
 
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
-import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuIssuerR
+import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuIssuer
 import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import com.github.karayuu.creategridregionplugin.util.*
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
@@ -19,7 +19,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 abstract class GridExtendOrReduceButton(private val operationDirection: RelativeDirection,
                                         viewingPlayer: Player,
                                         private val gridSelection: GridSelection,
-                                        private val menuIssuer: GridMenuIssuerR): Button {
+                                        private val menuIssuer: GridMenuIssuer): Button {
     override val icon: Icon by lazy {
         Icon(
                 Material.STAINED_GLASS_PANE,

@@ -2,7 +2,7 @@ package com.github.karayuu.creategridregionplugin.command.commands
 
 import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuIssuer
 import com.github.karayuu.creategridregionplugin.util.openInventoryOf
-import com.github.karayuu.creategridregionplugin.util.toPlayerData
+import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -23,9 +23,7 @@ class GridCommand : CommandExecutor {
             return false
         }
 
-        val senderData = sender.toPlayerData() ?: return true
-
-        sender.openInventoryOf(GridMenuIssuer(senderData))
+        sender.openInventoryOf(GridMenuIssuer(sender, GridSelection()))
 
         return true
     }
