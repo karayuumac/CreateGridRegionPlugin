@@ -1,6 +1,14 @@
 package com.github.karayuu.creategridregionplugin.util.selection
 
+import com.github.karayuu.creategridregionplugin.util.Vec2
+import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection
+import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection.*
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
+import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection.*
+import com.github.karayuu.creategridregionplugin.util.plus
+import com.github.karayuu.creategridregionplugin.util.times
+import com.sk89q.worldedit.bukkit.selections.Selection
+import org.bukkit.Location
 
 /**
  * グリッド領域の選択状態を表すデータクラス
@@ -66,6 +74,54 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
      * @return 新しいグリッド領域の選択状態
      */
     fun withNewSize(selectionSize: DirectionalSelectionSize) = GridSelection(selectionSize = selectionSize)
+
+    /**
+     * 与えられた[Location]を中心とするグリッド領域を構築し[Selection]として返します。
+     * @param centerLocation グリッド領域発行の中心地点を表す[Location]
+     * @return [centerLocation]の向きを考慮したグリッド領域全体を表す選択領域[Selection]
+     */
+    fun toWorldEditSelection(centerLocation: Location): Selection {
+        val locationCardinalDirection = CardinalDirection.fromLocation(centerLocation)
+
+        /**
+         * [centerLocation]から東(+X)への時計回りの回転回数
+         */
+        val rotationToEast = generateSequence(0, { it + 1 })
+                .find { locationCardinalDirection.turnRight(it) == EAST }!!
+
+        /**
+         * 中央グリッドの-XZ方向にある頂点からグリッド領域の-XZ方向にある頂点までのベクトル
+         */
+        val minRelativeToCenterMin = Vec2(
+                // 西向き(-X方向)のユニット数
+                selectionSize[AHEAD.turnRight(rotationToEast - 2)].toDouble(),
+                // 北向き(-Z方向)のユニット数
+                selectionSize[AHEAD.turnRight(rotationToEast - 1)].toDouble()
+        ) * (-15.0)
+
+        /**
+         * 中央グリッドの+XZ方向にある頂点からグリッド領域の+XZ方向にある頂点までのベクトル
+         */
+        val maxRelativeToCenterMin = Vec2(
+                // 東向き(+X方向)のユニット数
+                selectionSize[AHEAD.turnRight(rotationToEast)].toDouble(),
+                // 南向き(+Z方向)のユニット数
+                selectionSize[AHEAD.turnRight(rotationToEast + 1)].toDouble()
+        ) * 15.0 + Vec2(15.0, 15.0)
+
+        /**
+         * [centerLocation]を含むグリッドの-XZ方向にある頂点の座標
+         */
+        val centerGridMinPoint = Vec2(
+                Math.floor(centerLocation.x / 15.0) * 15.0,
+                Math.floor(centerLocation.z / 15.0) * 15.0
+        )
+
+        val absoluteMinPoint = centerGridMinPoint + minRelativeToCenterMin
+        val absoluteMaxPoint = centerGridMinPoint + maxRelativeToCenterMin
+
+        return VertExtendedCuboidSelection(centerLocation.world, absoluteMinPoint, absoluteMaxPoint)
+    }
 
     /**
      * 一回の操作でのユニット数の増減を表す列挙型
