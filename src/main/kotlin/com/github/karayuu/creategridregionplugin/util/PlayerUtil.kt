@@ -109,3 +109,8 @@ fun Player.createRegion() {
     AsyncCommandHelper.wrap(future, WORLD_GUARD, this).formatUsing(this.name + "_" + playerRegionNum)
             .registerWithSupervisor("保護申請中").thenRespondWith("保護申請完了。保護名: '%s'", "保護作成失敗")
 }
+
+/**
+ * プレーヤーが領域を選択します。
+ */
+fun Player.select(selection: Selection) = WORLD_EDIT.setSelection(this, selection)
