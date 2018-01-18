@@ -46,7 +46,7 @@ class GridMenuIssuer(private val issueTargetPlayer: Player,
                 4 to CurrentGridSelectionButton(gridSelection),
                 5 to extendOrReduceButtonFactory(RelativeDirection.RIGHT, 5),
                 6 to ResetButton(),
-                5 to extendOrReduceButtonFactory(RelativeDirection.BEHIND, 13),
+                7 to extendOrReduceButtonFactory(RelativeDirection.BEHIND, 13),
                 8 to CreateRegionButton(issueTargetPlayer)
         )
     }
