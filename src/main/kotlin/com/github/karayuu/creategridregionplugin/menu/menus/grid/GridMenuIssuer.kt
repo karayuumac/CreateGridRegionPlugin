@@ -1,5 +1,6 @@
 package com.github.karayuu.creategridregionplugin.menu.menus.grid
 
+import com.github.karayuu.creategridregionplugin.menu.InventoryProperty
 import com.github.karayuu.creategridregionplugin.menu.MenuIssuerWithSound
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.menus.grid.buttons.*
@@ -18,7 +19,7 @@ import org.bukkit.event.inventory.InventoryType
  */
 class GridMenuIssuer(private val issueTargetPlayer: Player,
                      private val gridSelection: GridSelection) : MenuIssuerWithSound() {
-    override val size = InventoryType.DISPENSER.defaultSize
+    override val inventoryProperty = InventoryProperty(InventoryType.DISPENSER)
 
     override val openingSound = SoundConfiguration(Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
 
