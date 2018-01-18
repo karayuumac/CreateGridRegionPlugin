@@ -1,7 +1,6 @@
 package com.github.karayuu.creategridregionplugin.menu
 
 import com.github.karayuu.creategridregionplugin.menu.component.Button
-import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.inventory.InventoryType
@@ -28,8 +27,8 @@ abstract class MenuIssuer: InventoryHolder {
     /** Menuのタイトル */
     abstract val title: String
 
-    /** インベントリのサイズ */
-    open val size = InventoryType.CHEST.defaultSize
+    /** インベントリのサイズまたはタイプを与えるプロパティ */
+    open val inventoryProperty = InventoryProperty(InventoryType.CHEST)
 
     /**
      * 発行したメニューが開かれたときのアクションを実行します
@@ -53,8 +52,8 @@ abstract class MenuIssuer: InventoryHolder {
      * インベントリを取得します。
      * @return inventory
      */
-    override fun getInventory(): Inventory = Bukkit.createInventory(this, size, title).also { inventory ->
-        buttonMap.filterKeys { it < size }.forEach { (slotNumber, button) ->
+    override fun getInventory(): Inventory = inventoryProperty.createInventoryWith(this, title).also { inventory ->
+        buttonMap.filterKeys { it < inventoryProperty.toSize() }.forEach { (slotNumber, button) ->
             inventory.setItem(slotNumber, button.icon.itemStack)
         }
     }
