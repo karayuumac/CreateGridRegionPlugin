@@ -85,6 +85,8 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
     private fun withNewSize(newSelectionSize: DirectionalSelectionSize) =
             GridSelection(unitChange = this.unitChange, selectionSize = newSelectionSize)
 
+    fun blockAlong(relativeDirection: RelativeDirection) = selectionSize[relativeDirection] * GRID_SIZE
+
     /**
      * 与えられた[Location]を中心とするグリッド領域を構築し[Selection]として返します。
      * @param centerLocation グリッド領域発行の中心地点を表す[Location]
@@ -107,7 +109,7 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
                 selectionSize[AHEAD.turnRight(rotationToEast - 2)],
                 // 北向き(-Z方向)のユニット数
                 selectionSize[AHEAD.turnRight(rotationToEast - 1)]
-        ) * (-15)
+        ) * (-GRID_SIZE)
 
         /**
          * 中央グリッドの+XZ方向にある頂点からグリッド領域の+XZ方向にある頂点までのベクトル
@@ -117,14 +119,14 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
                 selectionSize[AHEAD.turnRight(rotationToEast)],
                 // 南向き(+Z方向)のユニット数
                 selectionSize[AHEAD.turnRight(rotationToEast + 1)]
-        ) * 15 + Vec2(15, 15)
+        ) * GRID_SIZE + Vec2(GRID_SIZE, GRID_SIZE)
 
         /**
          * [centerLocation]を含むグリッドの-XZ方向にある頂点の座標
          */
         val centerGridMinPoint = Vec2(
-                floor(centerLocation.x / 15.0) * 15.0,
-                floor(centerLocation.z / 15.0) * 15.0
+                floor(centerLocation.x / GRID_SIZE.toDouble()) * GRID_SIZE,
+                floor(centerLocation.z / GRID_SIZE.toDouble()) * GRID_SIZE
         )
 
         val absoluteMinPoint = centerGridMinPoint + minRelativeToCenterMin
@@ -147,6 +149,10 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
 
         override fun toString() = amount.toString()
 
-        fun toBlockWidth() = amount * 15
+        fun toBlockWidth() = amount * GRID_SIZE
+    }
+
+    companion object {
+        const val GRID_SIZE = 15
     }
 }
