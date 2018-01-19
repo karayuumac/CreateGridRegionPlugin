@@ -2,9 +2,9 @@ package com.github.karayuu.creategridregionplugin.util.selection
 
 import com.github.karayuu.creategridregionplugin.util.Vec2
 import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection
-import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection.*
+import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection.EAST
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
-import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection.*
+import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection.AHEAD
 import com.github.karayuu.creategridregionplugin.util.plus
 import com.github.karayuu.creategridregionplugin.util.times
 import com.sk89q.worldedit.bukkit.selections.Selection
@@ -73,7 +73,8 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
      * @param selectionSize 新しい領域サイズ
      * @return 新しいグリッド領域の選択状態
      */
-    fun withNewSize(selectionSize: DirectionalSelectionSize) = GridSelection(selectionSize = selectionSize)
+    private fun withNewSize(selectionSize: DirectionalSelectionSize) =
+            GridSelection(unitChange = unitChange, selectionSize = selectionSize)
 
     /**
      * 与えられた[Location]を中心とするグリッド領域を構築し[Selection]として返します。

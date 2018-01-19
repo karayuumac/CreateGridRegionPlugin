@@ -35,7 +35,7 @@ data class DirectionalSelectionSize(private val ahead : Int = 0,
      * @param newUnit セットするユニット数
      * @return 操作を行った後の領域サイズ
      */
-    fun setUnitAlong(direction: RelativeDirection, newUnit: Int): DirectionalSelectionSize {
+    private fun setUnitAlong(direction: RelativeDirection, newUnit: Int): DirectionalSelectionSize {
         /** 指定 [RelativeDirection] に対応するキーを [newUnit] で置換した新しい[Map] */
         val newUnits = unitMap.mapValues { (relativeDirection, oldUnit) ->
             when (relativeDirection) {
