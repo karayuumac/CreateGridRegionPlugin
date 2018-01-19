@@ -9,6 +9,7 @@ import com.github.karayuu.creategridregionplugin.util.plus
 import com.github.karayuu.creategridregionplugin.util.times
 import com.sk89q.worldedit.bukkit.selections.Selection
 import org.bukkit.Location
+import kotlin.math.floor
 
 /**
  * グリッド領域の選択状態を表すデータクラス
@@ -103,27 +104,27 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
          */
         val minRelativeToCenterMin = Vec2(
                 // 西向き(-X方向)のユニット数
-                selectionSize[AHEAD.turnRight(rotationToEast - 2)].toDouble(),
+                selectionSize[AHEAD.turnRight(rotationToEast - 2)],
                 // 北向き(-Z方向)のユニット数
-                selectionSize[AHEAD.turnRight(rotationToEast - 1)].toDouble()
-        ) * (-15.0)
+                selectionSize[AHEAD.turnRight(rotationToEast - 1)]
+        ) * (-15)
 
         /**
          * 中央グリッドの+XZ方向にある頂点からグリッド領域の+XZ方向にある頂点までのベクトル
          */
         val maxRelativeToCenterMin = Vec2(
                 // 東向き(+X方向)のユニット数
-                selectionSize[AHEAD.turnRight(rotationToEast)].toDouble(),
+                selectionSize[AHEAD.turnRight(rotationToEast)],
                 // 南向き(+Z方向)のユニット数
-                selectionSize[AHEAD.turnRight(rotationToEast + 1)].toDouble()
-        ) * 15.0 + Vec2(15.0, 15.0)
+                selectionSize[AHEAD.turnRight(rotationToEast + 1)]
+        ) * 15 + Vec2(15, 15)
 
         /**
          * [centerLocation]を含むグリッドの-XZ方向にある頂点の座標
          */
         val centerGridMinPoint = Vec2(
-                Math.floor(centerLocation.x / 15.0) * 15.0,
-                Math.floor(centerLocation.z / 15.0) * 15.0
+                floor(centerLocation.x / 15.0) * 15.0,
+                floor(centerLocation.z / 15.0) * 15.0
         )
 
         val absoluteMinPoint = centerGridMinPoint + minRelativeToCenterMin
