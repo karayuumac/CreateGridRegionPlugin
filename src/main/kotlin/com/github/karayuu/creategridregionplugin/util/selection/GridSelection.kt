@@ -66,15 +66,23 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
      *
      * @return 新しいグリッド領域の選択状態
      */
-    fun toggleUnitChange() = GridSelection(unitChange.getNextSize())
+    fun toggleUnitChange() = withNewUnitChange(unitChange.getNextSize())
+
+    /**
+     * 与えられた[UnitChange]で新しいグリッド領域を用意します。
+     * @param newUnitChange 新しいユニット増減数
+     * @return 新しいグリッド領域の選択状態
+     */
+    private fun withNewUnitChange(newUnitChange: UnitChange) =
+            GridSelection(unitChange = newUnitChange, selectionSize = this.selectionSize)
 
     /**
      * 与えられた領域サイズで新しいグリッド領域を用意します。
-     * @param selectionSize 新しい領域サイズ
+     * @param newSelectionSize 新しい領域サイズ
      * @return 新しいグリッド領域の選択状態
      */
-    private fun withNewSize(selectionSize: DirectionalSelectionSize) =
-            GridSelection(unitChange = unitChange, selectionSize = selectionSize)
+    private fun withNewSize(newSelectionSize: DirectionalSelectionSize) =
+            GridSelection(unitChange = this.unitChange, selectionSize = newSelectionSize)
 
     /**
      * 与えられた[Location]を中心とするグリッド領域を構築し[Selection]として返します。
