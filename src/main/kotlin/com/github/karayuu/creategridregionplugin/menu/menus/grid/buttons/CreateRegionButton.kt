@@ -44,7 +44,6 @@ class CreateRegionButton(regionOwner: Player): Button {
         val config = CreateGridRegionPlugin.configFile
 
         regionOwner.closeInventory()
-        regionOwner.chat("//expect vert")
         regionOwner.createRegion()
 
         config.setPlayerRegionNum(regionOwner, config.getPlayerRegionNum(regionOwner) + 1)
