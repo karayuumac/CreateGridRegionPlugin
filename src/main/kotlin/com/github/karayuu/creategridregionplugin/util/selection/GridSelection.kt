@@ -119,7 +119,7 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
                 selectionSize[AHEAD.turnRight(rotationToEast)],
                 // 南向き(+Z方向)のユニット数
                 selectionSize[AHEAD.turnRight(rotationToEast + 1)]
-        ) * GRID_SIZE + Vec2(GRID_SIZE, GRID_SIZE)
+        ) * GRID_SIZE + Vec2(GRID_SIZE - 1, GRID_SIZE - 1)
 
         /**
          * [centerLocation]を含むグリッドの-XZ方向にある頂点の座標
