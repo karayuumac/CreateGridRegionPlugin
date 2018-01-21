@@ -62,11 +62,14 @@ fun HumanEntity.openInventoryOf(inventoryHolder: InventoryHolder) = inventoryHol
  * プレーヤーが選択中の領域で保護領域を作成できるかを返します。
  */
 fun Player.canCreateRegionWithSelection(): Boolean {
-    val config = CreateGridRegionPlugin.configFile
-    val selection: Selection = WORLD_EDIT.getSelection(this) ?: return false
+    val worldEditPlugin = CreateGridRegionPlugin.instance.worldEditPlugin
+    val worldGuardPlugin = CreateGridRegionPlugin.instance.worldGuardPlugin
 
-    val manager: RegionManager = WORLD_GUARD.getRegionManager(world)
-    val wcfg: WorldConfiguration = WORLD_GUARD.globalStateManager.get(world)
+    val config = CreateGridRegionPlugin.configFile
+    val selection: Selection = worldEditPlugin.getSelection(this) ?: return false
+
+    val manager: RegionManager = worldGuardPlugin.getRegionManager(world)
+    val wcfg: WorldConfiguration = worldGuardPlugin.globalStateManager.get(world)
 
     val region = ProtectedCuboidRegion(name + "_" + config.getPlayerRegionNum(this),
             selection.nativeMinimumPoint.toBlockVector(), selection.nativeMaximumPoint.toBlockVector())
@@ -77,7 +80,7 @@ fun Player.canCreateRegionWithSelection(): Boolean {
     }
 
     val maxRegionCount: Int = wcfg.getMaxRegionCount(player)
-    if (maxRegionCount >= 0 && manager.getRegionCountOfPlayer(WORLD_GUARD.wrapPlayer(player)) >= maxRegionCount) {
+    if (maxRegionCount >= 0 && manager.getRegionCountOfPlayer(worldGuardPlugin.wrapPlayer(player)) >= maxRegionCount) {
         return false
     }
 
@@ -88,22 +91,25 @@ fun Player.canCreateRegionWithSelection(): Boolean {
  * プレーヤーが選択中の領域で保護領域を作成します。
  */
 fun Player.createRegion() {
-    val selection: Selection = WORLD_EDIT.getSelection(this)
+    val worldEditPlugin = CreateGridRegionPlugin.instance.worldEditPlugin
+    val worldGuardPlugin = CreateGridRegionPlugin.instance.worldGuardPlugin
+
+    val selection: Selection = worldEditPlugin.getSelection(this)
     val playerRegionNum = CreateGridRegionPlugin.configFile.getPlayerRegionNum(this)
     val region = ProtectedCuboidRegion(this.name + "_" + playerRegionNum,
             selection.nativeMinimumPoint.toBlockVector(), selection.nativeMaximumPoint.toBlockVector())
-    val manager: RegionManager = WORLD_GUARD.getRegionManager(this.world)
+    val manager: RegionManager = worldGuardPlugin.getRegionManager(this.world)
 
-    val task = RegionAdder(WORLD_GUARD, manager, region)
+    val task = RegionAdder(worldGuardPlugin, manager, region)
     task.locatorPolicy = DomainInputResolver.UserLocatorPolicy.UUID_ONLY
     task.ownersInput = arrayOf(this.name)
-    val future = WORLD_GUARD.executorService.submit(task)
+    val future = worldGuardPlugin.executorService.submit(task)
 
-    AsyncCommandHelper.wrap(future, WORLD_GUARD, this).formatUsing(this.name + "_" + playerRegionNum)
+    AsyncCommandHelper.wrap(future, worldGuardPlugin, this).formatUsing(this.name + "_" + playerRegionNum)
             .registerWithSupervisor("保護申請中").thenRespondWith("保護申請完了。保護名: '%s'", "保護作成失敗")
 }
 
 /**
  * プレーヤーが領域を選択します。
  */
-fun Player.select(selection: Selection) = WORLD_EDIT.setSelection(this, selection)
+fun Player.select(selection: Selection) = CreateGridRegionPlugin.instance.worldEditPlugin.setSelection(this, selection)

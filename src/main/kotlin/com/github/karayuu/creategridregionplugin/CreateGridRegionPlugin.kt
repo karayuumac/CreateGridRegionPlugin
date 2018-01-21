@@ -3,6 +3,8 @@ package com.github.karayuu.creategridregionplugin
 import com.github.karayuu.creategridregionplugin.command.CommandRegistration
 import com.github.karayuu.creategridregionplugin.listener.ListenerRegistration
 import com.github.karayuu.creategridregionplugin.yml.ymls.Config
+import com.sk89q.worldedit.bukkit.WorldEditPlugin
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -18,6 +20,15 @@ class CreateGridRegionPlugin : JavaPlugin() {
         lateinit var instance: CreateGridRegionPlugin
         /** configファイルのインスタンス */
         lateinit var configFile: Config
+    }
+
+    // dependに追加しているプラグインは存在が保証されています。
+    val worldEditPlugin: WorldEditPlugin by lazy {
+        Bukkit.getServer().pluginManager.getPlugin("WorldEdit") as WorldEditPlugin
+    }
+
+    val worldGuardPlugin: WorldGuardPlugin by lazy {
+        Bukkit.getServer().pluginManager.getPlugin("WorldGuard") as WorldGuardPlugin
     }
 
     /**
