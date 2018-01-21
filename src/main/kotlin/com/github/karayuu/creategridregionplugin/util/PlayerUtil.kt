@@ -26,7 +26,7 @@ import java.util.*
  * @param uuid 検索したいUUID
  * @return 該当player
  */
-fun getPlayer(uuid: UUID) : Player? = CreateGridRegionPlugin.plugin.server.getPlayer(uuid)
+fun getPlayer(uuid: UUID) : Player? = CreateGridRegionPlugin.instance.server.getPlayer(uuid)
 
 /**
  * uuidからプレイヤーを取得する拡張関数

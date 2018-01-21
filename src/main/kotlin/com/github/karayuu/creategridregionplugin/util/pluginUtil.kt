@@ -16,7 +16,7 @@ import org.bukkit.Bukkit
  */
 fun disable(vararg msg: String) {
     msg.toList().forEach { sendWarning(it) }
-    Bukkit.getServer().pluginManager.disablePlugin(CreateGridRegionPlugin.plugin)
+    Bukkit.getServer().pluginManager.disablePlugin(CreateGridRegionPlugin.instance)
 }
 
 // ワールドガードAPIを返す

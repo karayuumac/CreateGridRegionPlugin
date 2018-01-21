@@ -15,7 +15,7 @@ class CreateGridRegionPlugin : JavaPlugin() {
 
     companion object {
         /** CreateGridRegionPluginのインスタンス */
-        lateinit var plugin: CreateGridRegionPlugin
+        lateinit var instance: CreateGridRegionPlugin
         /** configファイルのインスタンス */
         lateinit var configFile: Config
     }
@@ -24,7 +24,7 @@ class CreateGridRegionPlugin : JavaPlugin() {
      * 起動時の処理
      */
     override fun onEnable() {
-        plugin = this
+        instance = this
         CommandRegistration.register()
         //YmlRegistration.register()
         configFile = Config(this)

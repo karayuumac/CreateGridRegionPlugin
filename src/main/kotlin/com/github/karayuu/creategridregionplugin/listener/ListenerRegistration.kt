@@ -23,6 +23,6 @@ object ListenerRegistration {
         registerEvent(MenuListener())
     }
 
-    private fun registerEvent(listener: Listener) = CreateGridRegionPlugin.plugin.server.pluginManager.
-            registerEvents(listener, CreateGridRegionPlugin.plugin)
+    private fun registerEvent(listener: Listener) = CreateGridRegionPlugin.instance.server.pluginManager.
+            registerEvents(listener, CreateGridRegionPlugin.instance)
 }
