@@ -30,8 +30,8 @@ class MenuListener : Listener {
     }
 
     @EventHandler
-    fun onMenuClose(event: InventoryCloseEvent) = event.getMenuIssuer()?.onClose(event)
+    fun onMenuClose(event: InventoryCloseEvent) = event.getMenuIssuer()?.onMenuClose(event)
 
     @EventHandler
-    fun onMenuOpen(event: InventoryOpenEvent) = event.getMenuIssuer()?.onOpen(event)
+    fun onMenuOpen(event: InventoryOpenEvent) = event.getMenuIssuer()?.onMenuOpen(event)
 }

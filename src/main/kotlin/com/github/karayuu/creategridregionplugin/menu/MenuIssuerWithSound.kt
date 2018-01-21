@@ -20,12 +20,12 @@ abstract class MenuIssuerWithSound : MenuIssuer() {
     /** プレイヤーがメニューを閉じた際の音 */
     open val closingSound = SoundConfiguration(Sound.BLOCK_FENCE_GATE_OPEN, 1F, 0.1F)
 
-    override fun onOpen(event: InventoryOpenEvent) {
+    override fun onMenuOpen(event: InventoryOpenEvent) {
         val player = event.player as? Player ?: return
         player.playSound(openingSound)
     }
 
-    override fun onClose(event: InventoryCloseEvent) {
+    override fun onMenuClose(event: InventoryCloseEvent) {
         val player = event.player as? Player ?: return
         player.playSound(closingSound)
     }

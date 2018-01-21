@@ -33,12 +33,12 @@ abstract class MenuIssuer: InventoryHolder {
     /**
      * 発行したメニューが開かれたときのアクションを実行します
      */
-    abstract fun onOpen(event: InventoryOpenEvent)
+    abstract fun onMenuOpen(event: InventoryOpenEvent)
 
     /**
      * 発行したメニューが閉じられたときのアクションを実行します
      */
-    abstract fun onClose(event: InventoryCloseEvent)
+    abstract fun onMenuClose(event: InventoryCloseEvent)
 
     /**
      * スロット番号から、関連付けられたアクションを取得します。
