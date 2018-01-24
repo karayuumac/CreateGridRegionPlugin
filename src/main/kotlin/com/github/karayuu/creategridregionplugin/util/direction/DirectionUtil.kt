@@ -7,9 +7,13 @@ import org.bukkit.Location
  * @param direction プレーヤーからの相対方向
  * @return プレーヤーからの指定された方向にある方位を表す[CardinalDirection]
  */
-fun Location.cardinalDirectionOn(direction: RelativeDirection) = (0 until 4)
-        .first { RelativeDirection.AHEAD.turnRight(it) == direction }
+fun Location.cardinalDirectionOn(direction: RelativeDirection) = RelativeDirection.AHEAD.turnNumberTo(direction)
         .let { turnNumber -> CardinalDirection.fromLocation(this).turnRight(turnNumber) }
+
+/**
+ * 別の方向へ右に何度回転すればよいかを計算します。
+ */
+fun <T: Turnable<T>> T.turnNumberTo(direction: T) = (0 until period).first { this.turnRight(it) == direction }
 
 /**
  * オブジェクトが指し示す方向から[turnNumber]回時計回りに回転した方向を求めます。

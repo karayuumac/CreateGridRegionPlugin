@@ -5,6 +5,7 @@ import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirectio
 import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection.EAST
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection.AHEAD
+import com.github.karayuu.creategridregionplugin.util.direction.turnNumberTo
 import com.github.karayuu.creategridregionplugin.util.direction.turnRight
 import com.github.karayuu.creategridregionplugin.util.plus
 import com.github.karayuu.creategridregionplugin.util.times
@@ -99,8 +100,7 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
         /**
          * [centerLocation]から東(+X)への時計回りの回転回数
          */
-        val rotationToEast = generateSequence(0, { it + 1 })
-                .find { locationCardinalDirection.turnRight(it) == EAST }!!
+        val rotationToEast = locationCardinalDirection.turnNumberTo(EAST)
 
         /**
          * 中央グリッドの-XZ方向にある頂点からグリッド領域の-XZ方向にある頂点までのベクトル
