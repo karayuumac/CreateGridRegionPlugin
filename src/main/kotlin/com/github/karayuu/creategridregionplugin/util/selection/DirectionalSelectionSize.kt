@@ -86,7 +86,7 @@ data class DirectionalSelectionSize(private val ahead : Int = 0,
      */
     fun isValid(): Boolean {
         // とある方向へのユニット数が負であるならfalseを返す
-        if (unitMap.any { (_, unit) -> unit < 0 }) {
+        if (unitMap.values.any { it < 0 }) {
             return false
         }
 
