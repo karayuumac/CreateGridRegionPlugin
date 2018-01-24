@@ -95,12 +95,10 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
      * @return [centerLocation]の向きを考慮したグリッド領域全体を表す選択領域[Selection]
      */
     fun toWorldEditSelection(centerLocation: Location): Selection {
-        val locationCardinalDirection = CardinalDirection.fromLocation(centerLocation)
-
         /**
          * [centerLocation]から東(+X)への時計回りの回転回数
          */
-        val rotationToEast = locationCardinalDirection.turnNumberTo(EAST)
+        val rotationToEast = CardinalDirection.fromLocation(centerLocation).turnNumberTo(EAST)
 
         /**
          * 中央グリッドの-XZ方向にある頂点からグリッド領域の-XZ方向にある頂点までのベクトル
