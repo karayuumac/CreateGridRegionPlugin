@@ -5,6 +5,7 @@ import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirectio
 import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection.EAST
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection.AHEAD
+import com.github.karayuu.creategridregionplugin.util.direction.turnRight
 import com.github.karayuu.creategridregionplugin.util.plus
 import com.github.karayuu.creategridregionplugin.util.times
 import com.sk89q.worldedit.bukkit.selections.Selection
