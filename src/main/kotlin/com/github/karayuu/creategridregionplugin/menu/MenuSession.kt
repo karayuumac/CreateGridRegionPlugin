@@ -1,6 +1,8 @@
 package com.github.karayuu.creategridregionplugin.menu
 
 import com.github.karayuu.creategridregionplugin.menu.component.Button
+import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
@@ -29,6 +31,16 @@ abstract class MenuSession: InventoryHolder {
      * スロットに何もセットされていないなら空のラムダを返します。
      */
     fun getBoundAction(slotId: Int) = buttons[slotId]?.action ?: {}
+
+    /**
+     * メニューのインベントリが開かれたときのアクションを実行します
+     */
+    abstract fun onMenuOpen(event: InventoryOpenEvent)
+
+    /**
+     * メニューのインベントリが閉じられたときのアクションを実行します
+     */
+    abstract fun onMenuClose(event: InventoryCloseEvent)
 
     override fun getInventory() = sessionInventory
 

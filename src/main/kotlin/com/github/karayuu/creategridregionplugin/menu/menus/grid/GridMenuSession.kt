@@ -1,15 +1,18 @@
 package com.github.karayuu.creategridregionplugin.menu.menus.grid
 
-import com.github.karayuu.creategridregionplugin.menu.MenuSession
+import com.github.karayuu.creategridregionplugin.menu.MenuSessionWithSound
 import com.github.karayuu.creategridregionplugin.menu.menus.grid.buttons.*
+import com.github.karayuu.creategridregionplugin.util.SoundConfiguration
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import org.bukkit.ChatColor
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.inventory.InventoryView
 import kotlin.properties.Delegates
 
-class GridMenuSession(private val issueTargetPlayer: Player): MenuSession() {
+class GridMenuSession(private val issueTargetPlayer: Player): MenuSessionWithSound() {
+    override val openingSound = SoundConfiguration(Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
     override val title = "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}グリッド式保護メニュー"
 
     init {
