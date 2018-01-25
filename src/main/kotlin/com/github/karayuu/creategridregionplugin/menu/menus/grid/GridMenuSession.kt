@@ -32,7 +32,7 @@ class GridMenuSession(private val issueTargetPlayer: Player): MenuSession() {
             3 to extendOrReduceButtonFactory(RelativeDirection.LEFT, 10),
             4 to CurrentGridSelectionButton(gridSelection),
             5 to extendOrReduceButtonFactory(RelativeDirection.RIGHT, 5),
-            6 to ResetButton(),
+            6 to ResetButton(this),
             7 to extendOrReduceButtonFactory(RelativeDirection.BEHIND, 13),
             8 to CreateRegionButton(issueTargetPlayer)
     )
@@ -41,4 +41,11 @@ class GridMenuSession(private val issueTargetPlayer: Player): MenuSession() {
      * 発行対象プレーヤーにインベントリを送信する
      */
     fun send(): InventoryView = issueTargetPlayer.openInventory(super.getInventory())
+
+    /**
+     * グリッド選択領域をリセットする
+     */
+    fun resetState() {
+        gridSelection = GridSelection()
+    }
 }

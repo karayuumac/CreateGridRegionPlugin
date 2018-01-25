@@ -14,7 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 /**
  * [GridMenuSession]のリセットを行うボタンのクラス
  */
-class ResetButton: Button {
+class ResetButton(session: GridMenuSession): Button {
     private val buttonSound = SoundConfiguration(Sound.BLOCK_ANVIL_DESTROY, 0.5F, 1F)
 
     override val icon = Icon(
@@ -28,6 +28,6 @@ class ResetButton: Button {
         val player = event.whoClicked as? Player ?: return
         player.playSound(buttonSound)
 
-        GridMenuSession(player).send()
+        session.resetState()
     }
 }
