@@ -26,9 +26,12 @@ interface CyclicallyOrderedElement<out S: CyclicallyOrderedElement<S>> {
 }
 
 /**
- * 順序集合[S]の中で、レシーバーから引数まで何度巡回を行えばいいかを総当たりで計算します。
+ * 順序集合[S]の中で、レシーバーから引数まで何度巡回を行えばいいかを探索します。
  */
-fun <S: CyclicallyOrderedElement<S>> S.distanceTo(element: S) = (0 until setSize).first { this.progress(it) == element }
+fun <S: CyclicallyOrderedElement<S>> S.distanceTo(element: S): Int = when(this) {
+    element -> 0
+    else -> 1 + successor().distanceTo(element)
+}
 
 /**
  * 順序集合[S]の中で、レシーバから[target]回の巡回を行った結果を計算します。
