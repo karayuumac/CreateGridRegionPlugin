@@ -1,12 +1,12 @@
 package com.github.karayuu.creategridregionplugin.util.selection
 
 import com.github.karayuu.creategridregionplugin.util.Vec2
-import com.github.karayuu.creategridregionplugin.util.collection.distanceTo
-import com.github.karayuu.creategridregionplugin.util.collection.progress
 import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection
 import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection.EAST
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection.AHEAD
+import com.github.karayuu.creategridregionplugin.util.direction.rotate
+import com.github.karayuu.creategridregionplugin.util.direction.rotationTo
 import com.github.karayuu.creategridregionplugin.util.plus
 import com.github.karayuu.creategridregionplugin.util.times
 import com.sk89q.worldedit.bukkit.selections.Selection
@@ -98,16 +98,16 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
         /**
          * [centerLocation]から東(+X)への時計回りの回転回数
          */
-        val rotationToEast = CardinalDirection.fromLocation(centerLocation).distanceTo(EAST)
+        val rotationToEast = CardinalDirection.fromLocation(centerLocation).rotationTo(EAST)
 
         /**
          * 中央グリッドの-XZ方向にある頂点からグリッド領域の-XZ方向にある頂点までのベクトル
          */
         val minRelativeToCenterMin = Vec2(
                 // 西向き(-X方向)のユニット数
-                selectionSize[AHEAD.progress(rotationToEast - 2)],
+                selectionSize[AHEAD.rotate(rotationToEast - 2)],
                 // 北向き(-Z方向)のユニット数
-                selectionSize[AHEAD.progress(rotationToEast - 1)]
+                selectionSize[AHEAD.rotate(rotationToEast - 1)]
         ) * (-GRID_SIZE)
 
         /**
@@ -115,9 +115,9 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
          */
         val maxRelativeToCenterMin = Vec2(
                 // 東向き(+X方向)のユニット数
-                selectionSize[AHEAD.progress(rotationToEast)],
+                selectionSize[AHEAD.rotate(rotationToEast)],
                 // 南向き(+Z方向)のユニット数
-                selectionSize[AHEAD.progress(rotationToEast + 1)]
+                selectionSize[AHEAD.rotate(rotationToEast + 1)]
         ) * GRID_SIZE + Vec2(GRID_SIZE - 1, GRID_SIZE - 1)
 
         /**
