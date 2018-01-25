@@ -1,8 +1,6 @@
 package com.github.karayuu.creategridregionplugin.command.commands
 
-import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuIssuer
-import com.github.karayuu.creategridregionplugin.util.openInventoryOf
-import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
+import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuSession
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -23,7 +21,7 @@ class GridCommand : CommandExecutor {
             return false
         }
 
-        sender.openInventoryOf(GridMenuIssuer(sender, GridSelection()))
+        GridMenuSession(sender).send()
 
         return true
     }

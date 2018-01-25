@@ -9,10 +9,7 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet
 import com.sk89q.worldguard.protection.managers.RegionManager
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion
 import com.sk89q.worldguard.protection.util.DomainInputResolver
-import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.Player
-import org.bukkit.inventory.InventoryHolder
-import org.bukkit.inventory.InventoryView
 import java.util.*
 
 /**
@@ -50,13 +47,6 @@ fun sendMessage(player: Player?, msg: String) = player?.sendMessage(msg)
  * @return プレイヤー名 (if @null then return "No player")
  */
 fun getName(uuid: UUID): String = getPlayer(uuid)?.name ?: "No Player"
-
-/**
- * [HumanEntity]が与えられた[inventoryHolder]のインベントリを開きます。
- * @param [inventoryHolder] 開くインベントリの所有者
- * @return 開かれたインベントリに対応する[InventoryView]
- */
-fun HumanEntity.openInventoryOf(inventoryHolder: InventoryHolder) = inventoryHolder.inventory?.let { openInventory(it) }
 
 /**
  * プレーヤーが選択中の領域で保護領域を作成できるかを返します。
