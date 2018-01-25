@@ -16,8 +16,8 @@ abstract class MenuSession: InventoryHolder {
     open val inventoryProperty = InventoryProperty(InventoryType.CHEST)
 
     /** メニューのスロットIDとボタンの対応関係を示すMap */
-    protected var buttons: Map<Int, Button> by Delegates.observable(HashMap()) { _, _, _ ->
-        sessionInventory.synchronizeToButtonMap()
+    protected var buttons: Map<Int, Button> by Delegates.observable(HashMap()) { _, _, newButtonMap ->
+        sessionInventory.synchronizeTo(newButtonMap)
     }
 
     private val sessionInventory: Inventory by lazy {
@@ -44,7 +44,7 @@ abstract class MenuSession: InventoryHolder {
 
     override fun getInventory() = sessionInventory
 
-    private fun Inventory.synchronizeToButtonMap(): Inventory {
+    private fun Inventory.synchronizeTo(buttons: Map<Int, Button>): Inventory {
         this.clear()
         val validButtons = buttons.filterKeys { it < inventoryProperty.toSize() }
         validButtons.forEach { slotNumber, button -> this.setItem(slotNumber, button.icon.itemStack) }
