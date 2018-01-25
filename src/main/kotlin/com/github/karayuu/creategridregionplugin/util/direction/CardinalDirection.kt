@@ -1,17 +1,18 @@
 package com.github.karayuu.creategridregionplugin.util.direction
 
+import com.github.karayuu.creategridregionplugin.util.collection.CyclicallyOrderedElement
 import org.bukkit.Location
 
 /**
  * 東西南北の方角とそれに付随するデータをまとめた列挙型です。
  * @param localizedName ロケール化された方角名
  */
-enum class CardinalDirection(val localizedName: String): Turnable<CardinalDirection> {
+enum class CardinalDirection(val localizedName: String): CyclicallyOrderedElement<CardinalDirection> {
     NORTH("北(North)"), SOUTH("南(South)"), EAST("東(East)"), WEST("西(West)");
 
-    override val period = 4
+    override val setSize = 4
 
-    override fun directionOnRight() = when(this) {
+    override fun successor() = when(this) {
         NORTH -> EAST
         EAST -> SOUTH
         SOUTH -> WEST
