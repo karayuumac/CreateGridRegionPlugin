@@ -12,6 +12,8 @@ package com.github.karayuu.creategridregionplugin.util.collection
  * Sは例えば方位を表す集合であったり、離散的な色空間であったりします。
  *
  * @param S 巡回順序を定義する対象のクラス
+ *
+ * @author kory33
  */
 interface CyclicallyOrderedElement<out S: CyclicallyOrderedElement<S>> {
     /**

@@ -8,6 +8,8 @@ import com.github.karayuu.creategridregionplugin.util.collection.progress
  * 二次元平面において、「4方向」を指すことができるような方向を表すクラスです。
  *
  * 実装するクラスは、とある方向Dに対してDから時計回りに一番近い方向をsucc(D)と定めてください。
+ *
+ * @author kory33
  */
 interface FourWayDirection<T: FourWayDirection<T>>: CyclicallyOrderedElement<T> {
     override val setSize: Int
