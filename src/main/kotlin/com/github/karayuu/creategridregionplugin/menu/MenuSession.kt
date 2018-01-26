@@ -8,6 +8,17 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import kotlin.properties.Delegates
 
+/**
+ * インタラクティブなGUIメニューのセッションを表すクラスです。
+ * このクラスは内部状態として、GUIとして機能する内部インベントリ内のボタン配置を与える[buttons]を持ちます。
+ *
+ * [buttons]に新しいインスタンスが代入されるたびに内部インベントリが更新され、
+ * Bukkitの仕様によりこのインベントリを見ているプレーヤー全員に対してメニューの再描画が行われます。
+ *
+ * 派生クラスは、[onMenuOpen]と[onMenuOpen]をメニューインベントリ開閉時のアクションとして定義することができます。
+ *
+ * @author kory33
+ */
 abstract class MenuSession: InventoryHolder {
     /** メニューインベントリのタイトル */
     abstract val title: String
@@ -15,7 +26,10 @@ abstract class MenuSession: InventoryHolder {
     /** インベントリのサイズまたはタイプを与えるプロパティ */
     open val inventoryProperty = InventoryProperty(InventoryType.CHEST)
 
-    /** メニューのスロットIDとボタンの対応関係を示すMap */
+    /**
+     * メニューのスロットIDとボタンの対応関係を示すMapです。
+     * このフィールドに新しいMapが代入されるたびにメニューインベントリの更新が行われます。
+     */
     protected var buttons: Map<Int, Button> by Delegates.observable(HashMap()) { _, _, newButtonMap ->
         sessionInventory.synchronizeTo(newButtonMap)
     }

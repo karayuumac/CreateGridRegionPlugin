@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 
 /**
- * インベントリ開閉時に音が鳴るようなメニューのセッションを表すクラス
+ * インベントリ開閉時に音が鳴るようなメニューのセッションを表すクラスです。
  */
 abstract class MenuSessionWithSound: MenuSession() {
     /** プレイヤーがメニューを開いた際の音 */
