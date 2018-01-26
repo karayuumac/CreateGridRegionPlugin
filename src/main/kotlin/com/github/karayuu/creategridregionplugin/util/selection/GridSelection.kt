@@ -2,13 +2,16 @@ package com.github.karayuu.creategridregionplugin.util.selection
 
 import com.github.karayuu.creategridregionplugin.util.Vec2
 import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection
-import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection.*
+import com.github.karayuu.creategridregionplugin.util.direction.CardinalDirection.EAST
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
-import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection.*
+import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection.AHEAD
+import com.github.karayuu.creategridregionplugin.util.direction.rotate
+import com.github.karayuu.creategridregionplugin.util.direction.rotationTo
 import com.github.karayuu.creategridregionplugin.util.plus
 import com.github.karayuu.creategridregionplugin.util.times
 import com.sk89q.worldedit.bukkit.selections.Selection
 import org.bukkit.Location
+import kotlin.math.floor
 
 /**
  * グリッド領域の選択状態を表すデータクラス
@@ -66,14 +69,25 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
      *
      * @return 新しいグリッド領域の選択状態
      */
-    fun toggleUnitChange() = GridSelection(unitChange.getNextSize())
+    fun toggleUnitChange() = withNewUnitChange(unitChange.getNextSize())
+
+    /**
+     * 与えられた[UnitChange]で新しいグリッド領域を用意します。
+     * @param newUnitChange 新しいユニット増減数
+     * @return 新しいグリッド領域の選択状態
+     */
+    private fun withNewUnitChange(newUnitChange: UnitChange) =
+            GridSelection(unitChange = newUnitChange, selectionSize = this.selectionSize)
 
     /**
      * 与えられた領域サイズで新しいグリッド領域を用意します。
-     * @param selectionSize 新しい領域サイズ
+     * @param newSelectionSize 新しい領域サイズ
      * @return 新しいグリッド領域の選択状態
      */
-    fun withNewSize(selectionSize: DirectionalSelectionSize) = GridSelection(selectionSize = selectionSize)
+    private fun withNewSize(newSelectionSize: DirectionalSelectionSize) =
+            GridSelection(unitChange = this.unitChange, selectionSize = newSelectionSize)
+
+    fun blockAlong(relativeDirection: RelativeDirection) = selectionSize[relativeDirection] * GRID_SIZE
 
     /**
      * 与えられた[Location]を中心とするグリッド領域を構築し[Selection]として返します。
@@ -81,40 +95,37 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
      * @return [centerLocation]の向きを考慮したグリッド領域全体を表す選択領域[Selection]
      */
     fun toWorldEditSelection(centerLocation: Location): Selection {
-        val locationCardinalDirection = CardinalDirection.fromLocation(centerLocation)
-
         /**
          * [centerLocation]から東(+X)への時計回りの回転回数
          */
-        val rotationToEast = generateSequence(0, { it + 1 })
-                .find { locationCardinalDirection.turnRight(it) == EAST }!!
+        val rotationToEast = CardinalDirection.fromLocation(centerLocation).rotationTo(EAST)
 
         /**
          * 中央グリッドの-XZ方向にある頂点からグリッド領域の-XZ方向にある頂点までのベクトル
          */
         val minRelativeToCenterMin = Vec2(
                 // 西向き(-X方向)のユニット数
-                selectionSize[AHEAD.turnRight(rotationToEast - 2)].toDouble(),
+                selectionSize[AHEAD.rotate(rotationToEast - 2)],
                 // 北向き(-Z方向)のユニット数
-                selectionSize[AHEAD.turnRight(rotationToEast - 1)].toDouble()
-        ) * (-15.0)
+                selectionSize[AHEAD.rotate(rotationToEast - 1)]
+        ) * (-GRID_SIZE)
 
         /**
          * 中央グリッドの+XZ方向にある頂点からグリッド領域の+XZ方向にある頂点までのベクトル
          */
         val maxRelativeToCenterMin = Vec2(
                 // 東向き(+X方向)のユニット数
-                selectionSize[AHEAD.turnRight(rotationToEast)].toDouble(),
+                selectionSize[AHEAD.rotate(rotationToEast)],
                 // 南向き(+Z方向)のユニット数
-                selectionSize[AHEAD.turnRight(rotationToEast + 1)].toDouble()
-        ) * 15.0 + Vec2(15.0, 15.0)
+                selectionSize[AHEAD.rotate(rotationToEast + 1)]
+        ) * GRID_SIZE + Vec2(GRID_SIZE - 1, GRID_SIZE - 1)
 
         /**
          * [centerLocation]を含むグリッドの-XZ方向にある頂点の座標
          */
         val centerGridMinPoint = Vec2(
-                Math.floor(centerLocation.x / 15.0) * 15.0,
-                Math.floor(centerLocation.z / 15.0) * 15.0
+                floor(centerLocation.x / GRID_SIZE.toDouble()) * GRID_SIZE,
+                floor(centerLocation.z / GRID_SIZE.toDouble()) * GRID_SIZE
         )
 
         val absoluteMinPoint = centerGridMinPoint + minRelativeToCenterMin
@@ -137,6 +148,10 @@ data class GridSelection(val unitChange: UnitChange = UnitChange.ONE,
 
         override fun toString() = amount.toString()
 
-        fun toBlockWidth() = amount * 15
+        fun toBlockWidth() = amount * GRID_SIZE
+    }
+
+    companion object {
+        const val GRID_SIZE = 15
     }
 }

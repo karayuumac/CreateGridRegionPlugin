@@ -3,9 +3,9 @@ package com.github.karayuu.creategridregionplugin.menu.menus.grid.buttons
 import com.github.karayuu.creategridregionplugin.CreateGridRegionPlugin
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
-import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection.*
+import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -20,7 +20,7 @@ class CurrentGridSelectionButton(private val gridSelection: GridSelection): Butt
     private fun GridSelection.loreForDirectionOf(direction: RelativeDirection) =
             "${ChatColor.GRAY}${direction.localizedName}方向：" +
                     "${ChatColor.AQUA}${selectionSize[direction]}${ChatColor.GRAY}ユニット" +
-                    "(${ChatColor.AQUA}${numberFormat.format(selectionSize[direction] * 15)}${ChatColor.GRAY}ブロック)"
+                    "(${ChatColor.AQUA}${numberFormat.format(blockAlong(direction))}${ChatColor.GRAY}ブロック)"
 
     override val icon = Icon(
             Material.STAINED_GLASS_PANE,

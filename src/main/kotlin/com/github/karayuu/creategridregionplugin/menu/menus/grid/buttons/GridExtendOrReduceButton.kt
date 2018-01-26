@@ -2,11 +2,10 @@ package com.github.karayuu.creategridregionplugin.menu.menus.grid.buttons
 
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
-import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuIssuer
-import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
-import com.github.karayuu.creategridregionplugin.util.*
+import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuSession
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.direction.cardinalDirectionOn
+import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -19,7 +18,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 abstract class GridExtendOrReduceButton(private val operationDirection: RelativeDirection,
                                         viewingPlayer: Player,
                                         private val gridSelection: GridSelection,
-                                        private val menuIssuer: GridMenuIssuer): Button {
+                                        private val menuSession: GridMenuSession): Button {
     override val icon: Icon by lazy {
         Icon(
                 Material.STAINED_GLASS_PANE,
@@ -30,13 +29,11 @@ abstract class GridExtendOrReduceButton(private val operationDirection: Relative
     }
 
     override val action: (InventoryClickEvent) -> Unit = { event ->
-        val newGridSelection = when {
-            event.isLeftClick -> gridSelection.safeExtendAlong(RelativeDirection.AHEAD)
-            event.isRightClick -> gridSelection.safeReduceAlong(RelativeDirection.AHEAD)
+        menuSession.gridSelection = when {
+            event.isLeftClick -> gridSelection.safeExtendAlong(operationDirection)
+            event.isRightClick -> gridSelection.safeReduceAlong(operationDirection)
             else -> gridSelection
         }
-
-        event.whoClicked.openInventoryOf(menuIssuer.replicateWith(newGridSelection))
     }
 
     private val iconName = "${ChatColor.DARK_GREEN}${operationDirection.localizedName}に" +

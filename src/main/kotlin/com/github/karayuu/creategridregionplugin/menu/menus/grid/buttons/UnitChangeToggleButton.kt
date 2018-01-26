@@ -2,9 +2,8 @@ package com.github.karayuu.creategridregionplugin.menu.menus.grid.buttons
 
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
-import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuIssuer
+import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuSession
 import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
-import com.github.karayuu.creategridregionplugin.util.openInventoryOf
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -12,16 +11,9 @@ import org.bukkit.event.inventory.InventoryClickEvent
 /**
  * ユニット数の増減量をトグルするボタンを表すクラスです。
  */
-class UnitChangeToggleButton(private val gridSelection: GridSelection,
-                             private val menuIssuer: GridMenuIssuer): Button {
-    override val icon = getIcon(gridSelection)
-
-    override val action: (InventoryClickEvent) -> Unit = { event ->
-        val newGridSelection = gridSelection.toggleUnitChange()
-        event.whoClicked.openInventoryOf(menuIssuer.replicateWith(newGridSelection))
-    }
-
-    private fun getIcon(gridSelection: GridSelection) = Icon(
+class UnitChangeToggleButton(gridSelection: GridSelection,
+                             private val menuSession: GridMenuSession): Button {
+    override val icon = Icon(
             Material.STAINED_GLASS_PANE,
             name = "${ChatColor.GREEN}拡張単位の変更",
             lore = listOf(
@@ -33,4 +25,7 @@ class UnitChangeToggleButton(private val gridSelection: GridSelection,
             )
     )
 
+    override val action: (InventoryClickEvent) -> Unit = {
+        menuSession.gridSelection = menuSession.gridSelection.toggleUnitChange()
+    }
 }

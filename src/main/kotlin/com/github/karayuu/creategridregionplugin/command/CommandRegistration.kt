@@ -20,7 +20,7 @@ object CommandRegistration {
      * 指定されたexecutorと名前(name)を結び付けてpluginに登録
      */
     private fun registCommand(executor: CommandExecutor, name: String) {
-        CreateGridRegionPlugin.plugin.getCommand(name).also { pluginCommand ->
+        CreateGridRegionPlugin.instance.getCommand(name).also { pluginCommand ->
             if (pluginCommand == null) {
                 sendWarning("${executor::class.java.simpleName} を登録できませんでした。")
                 sendWarning("plugin.ymlに$name を登録してください。")

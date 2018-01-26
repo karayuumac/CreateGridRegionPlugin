@@ -19,6 +19,13 @@ class CreateRegionButton(regionOwner: Player): Button {
     override val icon = if (regionOwner.canCreateRegionWithSelection()) {
         Icon(
                 Material.WOOL,
+                damage = 11,
+                name = "${ChatColor.RED}保護作成",
+                lore = listOf("${ChatColor.RED}${ChatColor.UNDERLINE}クリックで作成")
+        )
+    } else {
+        Icon(
+                Material.WOOL,
                 damage = 14,
                 name = "${ChatColor.RED}保護作成",
                 lore = listOf(
@@ -26,13 +33,6 @@ class CreateRegionButton(regionOwner: Player): Button {
                         "${ChatColor.RED}・保護の範囲がほかの保護と重複している",
                         "${ChatColor.RED}・保護の作成上限に達している"
                 )
-        )
-    } else {
-        Icon(
-                Material.WOOL,
-                damage = 11,
-                name = "${ChatColor.RED}保護作成",
-                lore = listOf("${ChatColor.RED}${ChatColor.UNDERLINE}クリックで作成")
         )
     }
 
@@ -44,7 +44,6 @@ class CreateRegionButton(regionOwner: Player): Button {
         val config = CreateGridRegionPlugin.configFile
 
         regionOwner.closeInventory()
-        regionOwner.chat("//expect vert")
         regionOwner.createRegion()
 
         config.setPlayerRegionNum(regionOwner, config.getPlayerRegionNum(regionOwner) + 1)

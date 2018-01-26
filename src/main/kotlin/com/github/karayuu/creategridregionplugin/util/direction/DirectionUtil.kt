@@ -7,6 +7,7 @@ import org.bukkit.Location
  * @param direction プレーヤーからの相対方向
  * @return プレーヤーからの指定された方向にある方位を表す[CardinalDirection]
  */
-fun Location.cardinalDirectionOn(direction: RelativeDirection) = (0 until 4)
-        .first { RelativeDirection.AHEAD.turnRight(it) == direction }
-        .let { turnNumber -> CardinalDirection.fromLocation(this).turnRight(turnNumber) }
+fun Location.cardinalDirectionOn(direction: RelativeDirection) = CardinalDirection.fromLocation(this).let { ahead ->
+    val rotation = RelativeDirection.AHEAD.rotationTo(direction)
+    ahead.rotate(rotation)
+}
