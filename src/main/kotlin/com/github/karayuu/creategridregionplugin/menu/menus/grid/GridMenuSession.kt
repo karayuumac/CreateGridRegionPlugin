@@ -14,6 +14,12 @@ import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.InventoryView
 import kotlin.properties.Delegates
 
+/**
+ * グリッド保護作成用のGUIセッションを表すクラスです。
+ *
+ * [gridSelection]を`public`な内部状態として持ち、これに新しい[GridSelection]のインスタンスを代入することで
+ * メニューの再描画と領域の再選択が行えます。
+ */
 class GridMenuSession(private val issueTargetPlayer: Player): MenuSessionWithSound() {
     override val openingSound = SoundConfiguration(Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
     override val title = "${ChatColor.LIGHT_PURPLE}${ChatColor.BOLD}グリッド式保護メニュー"
