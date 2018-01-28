@@ -3,8 +3,10 @@ package com.github.karayuu.creategridregionplugin.menu.menus.grid.buttons
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
 import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuSession
+import com.github.karayuu.creategridregionplugin.util.SoundConfiguration
 import com.github.karayuu.creategridregionplugin.util.direction.RelativeDirection
 import com.github.karayuu.creategridregionplugin.util.direction.cardinalDirectionOn
+import com.github.karayuu.creategridregionplugin.util.playSound
 import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -20,6 +22,8 @@ abstract class GridExtendOrReduceButton(private val operationDirection: Relative
                                         viewingPlayer: Player,
                                         private val gridSelection: GridSelection,
                                         private val menuSession: GridMenuSession): Button {
+    protected open val clickSound = SoundConfiguration(Sound.BLOCK_STONE_BUTTON_CLICK_ON, 0.2F, 1F)
+
     override val icon: Icon by lazy {
         Icon(
                 Material.STAINED_GLASS_PANE,
@@ -30,13 +34,11 @@ abstract class GridExtendOrReduceButton(private val operationDirection: Relative
     }
 
     override val action: (InventoryClickEvent) -> Unit = { event ->
+        (event.whoClicked as? Player)?.playSound(clickSound)
+
         menuSession.gridSelection = when {
-            event.isLeftClick -> gridSelection.safeExtendAlong(operationDirection).also {
-                viewingPlayer.playSound(viewingPlayer.location, Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
-            }
-            event.isRightClick -> gridSelection.safeReduceAlong(operationDirection).also {
-                viewingPlayer.playSound(viewingPlayer.location, Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
-            }
+            event.isLeftClick -> gridSelection.safeExtendAlong(operationDirection)
+            event.isRightClick -> gridSelection.safeReduceAlong(operationDirection)
             else -> gridSelection
         }
     }
