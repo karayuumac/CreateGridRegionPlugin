@@ -8,6 +8,7 @@ import com.github.karayuu.creategridregionplugin.util.direction.cardinalDirectio
 import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import org.bukkit.ChatColor
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 
@@ -30,8 +31,12 @@ abstract class GridExtendOrReduceButton(private val operationDirection: Relative
 
     override val action: (InventoryClickEvent) -> Unit = { event ->
         menuSession.gridSelection = when {
-            event.isLeftClick -> gridSelection.safeExtendAlong(operationDirection)
-            event.isRightClick -> gridSelection.safeReduceAlong(operationDirection)
+            event.isLeftClick -> gridSelection.safeExtendAlong(operationDirection).also {
+                viewingPlayer.playSound(viewingPlayer.location, Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
+            }
+            event.isRightClick -> gridSelection.safeReduceAlong(operationDirection).also {
+                viewingPlayer.playSound(viewingPlayer.location, Sound.BLOCK_STONE_BUTTON_CLICK_ON, 1F, 1F)
+            }
             else -> gridSelection
         }
     }

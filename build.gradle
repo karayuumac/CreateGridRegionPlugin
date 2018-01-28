@@ -21,7 +21,7 @@ targetCompatibility = 1.8
 tasks.withType(JavaCompile)*.options*.encoding = tasks.withType(GroovyCompile)*.groovyOptions*.encoding = 'UTF-8'
 
 String libFolder = System.getenv("GIGANTIC_LIB")
-String outputFolder = "C:\\Users\\karayuu\\Documents\\server-SeichiAssist(s2)\\plugins"
+String outputFolder = "C:\\Users\\karayuu\\Documents\\server-1.12.2(seichiassist)\\plugins"
 if (libFolder == null || libFolder.isEmpty()) {
     for (int i = 0; i < 10; i++) {
         println("ERROR: Env variable \"GIGANTIC_LIB\" isn't defined. The build will be failed.")
