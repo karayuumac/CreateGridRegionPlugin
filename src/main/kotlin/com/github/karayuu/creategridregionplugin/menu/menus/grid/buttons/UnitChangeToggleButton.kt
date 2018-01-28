@@ -3,9 +3,13 @@ package com.github.karayuu.creategridregionplugin.menu.menus.grid.buttons
 import com.github.karayuu.creategridregionplugin.menu.component.Button
 import com.github.karayuu.creategridregionplugin.menu.component.Icon
 import com.github.karayuu.creategridregionplugin.menu.menus.grid.GridMenuSession
+import com.github.karayuu.creategridregionplugin.util.SoundConfiguration
+import com.github.karayuu.creategridregionplugin.util.playSound
 import com.github.karayuu.creategridregionplugin.util.selection.GridSelection
 import org.bukkit.ChatColor
 import org.bukkit.Material
+import org.bukkit.Sound
+import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 
 /**
@@ -25,7 +29,13 @@ class UnitChangeToggleButton(gridSelection: GridSelection,
             )
     )
 
-    override val action: (InventoryClickEvent) -> Unit = {
+    override val action: (InventoryClickEvent) -> Unit = { event ->
+        (event.whoClicked as? Player)?.playSound(clickSound)
+
         menuSession.gridSelection = menuSession.gridSelection.toggleUnitChange()
+    }
+
+    companion object {
+        val clickSound = SoundConfiguration(Sound.BLOCK_STONE_BUTTON_CLICK_ON, 0.2F, 1F)
     }
 }
