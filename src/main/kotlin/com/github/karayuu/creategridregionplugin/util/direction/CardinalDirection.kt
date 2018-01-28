@@ -18,8 +18,12 @@ enum class CardinalDirection(val localizedName: String): FourWayDirection<Cardin
 
     companion object {
         fun fromLocation(location: Location): CardinalDirection {
-            // yaw \in [-180, 180) なので rotation >= 0
-            val rotation = (location.yaw + 180) % 360
+            val rotation = ((location.yaw + 180) % 360).let {
+                when {
+                    it < 0 -> it + 360
+                    else -> it
+                }
+            }
 
             return when {
                 45 <= rotation && rotation < 135  -> EAST
